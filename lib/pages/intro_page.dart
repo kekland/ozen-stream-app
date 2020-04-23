@@ -1,6 +1,7 @@
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:ozen_app/components/app_logo.dart';
+import 'package:ozen_app/pages/onboarding_page.dart';
 
 import 'main_page.dart';
 
@@ -29,7 +30,7 @@ class _IntroPageState extends State<IntroPage> {
             return CircularRevealAnimation(
               animation: _animation,
               centerAlignment: Alignment.center,
-              child: MainPage(),
+              child: OnboardingPage(),
             );
           }),
     );
