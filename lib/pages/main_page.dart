@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ozen_app/components/main_page/about_us_slider.dart';
 import 'package:ozen_app/components/main_page/app_logo.dart';
 import 'package:ozen_app/components/main_page/audio_tunes_bar.dart';
 import 'package:ozen_app/components/main_page/button_bar.dart';
@@ -29,11 +30,27 @@ class _MainPageState extends State<MainPage> {
             Expanded(
               child: Stack(
                 children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 80.0),
+                    child: Padding(
+                      padding: const EdgeInsets.all(32.0),
+                      child: AboutUsSlider(),
+                    ),
+                  ),
                   Align(
                     alignment: Alignment.topRight,
                     child: Padding(
                       padding: const EdgeInsets.all(32.0),
-                      child: AppLogo(),
+                      child: Row(
+                        children: <Widget>[
+                          IconButton(
+                            icon: Icon(Icons.menu),
+                            onPressed: () {},
+                          ),
+                          Spacer(),
+                          AppLogo(),
+                        ],
+                      ),
                     ),
                   ),
                   HeartsAnimatorBar(
