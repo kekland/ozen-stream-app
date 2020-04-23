@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:ozen_app/components/main_page/audio_tunes_bar.dart';
 import 'package:ozen_app/extensions.dart';
@@ -51,6 +53,7 @@ class SoundwaveWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return OverflowBox(
       maxWidth: double.infinity,
+      alignment: Alignment.centerLeft,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -92,22 +95,43 @@ class AlwaysScrollingSoundwaveWidget extends StatefulWidget {
 }
 
 class _AlwaysScrollingSoundwaveWidgetState
-    extends State<AlwaysScrollingSoundwaveWidget> {
+    extends State<AlwaysScrollingSoundwaveWidget>
+    with SingleTickerProviderStateMixin {
   AnimationController scrollAnimation;
   List<double> bars;
   double width;
+  final Duration scrollDuration = Duration(seconds: 1);
+  final double barWidth = 10.0;
 
   @override
   void didChangeDependencies() {
     width = MediaQuery.of(context).size.width;
+    initializeBars();
     super.didChangeDependencies();
+  }
+
+  initState() {
+    super.initState();
+    scrollAnimation =
+        AnimationController(vsync: this, duration: scrollDuration);
+    scrollAnimation.addListener(() {
+      if (scrollAnimation.status == AnimationStatus.completed) {
+        scrollAnimation.forward(from: 0.0);
+        addAnotherBar();
+      }
+      setState(() {});
+    });
+  }
+
+  dispose() {
+    scrollAnimation.dispose();
+    super.dispose();
   }
 
   initializeBars() {
     bars = [];
 
-    final _singleBarWidthWithMargin = 4.0 + 6.0;
-    final int numberBars = (width / _singleBarWidthWithMargin).ceil();
+    final int numberBars = (width / barWidth).ceil();
 
     for (int i = 0; i < numberBars; i++) {
       bars.add(widget.intensityGenerator(i));
@@ -116,11 +140,20 @@ class _AlwaysScrollingSoundwaveWidgetState
     setState(() {});
   }
 
+  addAnotherBar() {
+    if (bars == null) return;
+    bars.removeAt(0);
+    bars.add(widget.intensityGenerator(bars.length + 1));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return SoundwaveWidget(
-      bars: bars,
-      height: widget.height,
+    return Transform.translate(
+      offset: Offset(-scrollAnimation.value * barWidth, 0.0),
+      child: SoundwaveWidget(
+        bars: bars ?? [],
+        height: widget.height,
+      ),
     );
   }
 }
