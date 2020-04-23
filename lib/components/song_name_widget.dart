@@ -12,19 +12,27 @@ class SongNameWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          author,
-          style: TextStyle(
-            color: context.textTheme.caption.color,
-            fontSize: 16.0,
-            fontWeight: FontWeight.w500,
+        Container(
+          color: Colors.black,
+          padding: const EdgeInsets.all(4.0),
+          child: Text(
+            author,
+            style: TextStyle(
+              color: context.textTheme.caption.color,
+              fontSize: 16.0,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
-        Text(
-          title,
-          style: TextStyle(
-            fontSize: 22.0,
-            fontWeight: FontWeight.w500,
+        Container(
+          color: Colors.black,
+          padding: const EdgeInsets.all(4.0),
+          child: Text(
+            title,
+            style: TextStyle(
+              fontSize: 22.0,
+              fontWeight: FontWeight.w500,
+            ),
           ),
         ),
       ],

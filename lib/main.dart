@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:ozen_app/pages/intro_page.dart';
 import 'package:ozen_app/pages/main_page.dart';
 import 'package:ozen_app/pages/onboarding_page.dart';
@@ -7,9 +8,17 @@ import 'package:ozen_app/pages/sign_in_page.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarIconBrightness: Brightness.light,
+        ),
+      );
+    });
+
     return MaterialApp(
       title: 'õzen',
       themeMode: ThemeMode.dark,

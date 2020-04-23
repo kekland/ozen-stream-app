@@ -22,67 +22,93 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Stack(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 80.0),
-                    child: Padding(
-                      padding: const EdgeInsets.all(32.0),
-                      child: AboutUsSlider(),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: Padding(
-                      padding: const EdgeInsets.all(32.0),
-                      child: Row(
-                        children: <Widget>[
-                          IconButton(
-                            icon: Icon(Icons.settings),
-                            onPressed: () {},
-                          ),
-                          Spacer(),
-                          AppLogo(),
-                        ],
-                      ),
-                    ),
-                  ),
-                  HeartsAnimatorBar(
-                    controller: heartsController,
-                  ),
+      body: Stack(
+        children: <Widget>[
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.black,
+            ),
+            child: Image.network(
+              'https://i.pinimg.com/originals/ec/86/02/ec86020d19e2a36711ff12c4190d6cdb.jpg',
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: double.infinity,
+            ),
+            foregroundDecoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment(0.0, 1.0),
+                end: Alignment(0.0, -1.0),
+                colors: [
+                  Colors.black.withOpacity(0.5),
+                  Colors.black.withOpacity(0.0),
+                  Colors.black.withOpacity(0.5),
                 ],
               ),
             ),
-            AudioTunesBar(),
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 32.0,
-                right: 32.0,
-                top: 32.0,
-              ),
-              child: SongNameWidget(
-                author: 'Mag Family',
-                title: 'Evening Luck',
-              ),
+          ),
+          SafeArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Stack(
+                    children: [
+                      /* Padding(
+                        padding: const EdgeInsets.only(top: 80.0),
+                        child: Padding(
+                          padding: const EdgeInsets.all(32.0),
+                          child: AboutUsSlider(),
+                        ),
+                      ), */
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: Padding(
+                          padding: const EdgeInsets.all(32.0),
+                          child: Row(
+                            children: <Widget>[
+                              IconButton(
+                                icon: Icon(Icons.settings),
+                                onPressed: () {},
+                              ),
+                              Spacer(),
+                              AppLogo(),
+                            ],
+                          ),
+                        ),
+                      ),
+                      HeartsAnimatorBar(
+                        controller: heartsController,
+                      ),
+                    ],
+                  ),
+                ),
+                AudioTunesBar(),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 32.0,
+                    right: 32.0,
+                    top: 32.0,
+                  ),
+                  child: SongNameWidget(
+                    author: 'Daft Punk',
+                    title: 'Around the world',
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    left: 32.0,
+                    right: 32.0,
+                    bottom: 32.0,
+                    top: 32.0,
+                  ),
+                  child: MainPageButtonBar(
+                    onTapHeart: () => heartsController.addHeart(),
+                  ),
+                ),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 32.0,
-                right: 32.0,
-                bottom: 32.0,
-                top: 32.0,
-              ),
-              child: MainPageButtonBar(
-                onTapHeart: () => heartsController.addHeart(),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

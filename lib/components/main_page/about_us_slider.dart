@@ -25,6 +25,7 @@ class _AboutUsSliderState extends State<AboutUsSlider>
   int currentPage = 0;
   AnimationController controller;
   Animation<double> animation;
+  Timer timer;
 
   int get nextPage {
     if (currentPage == pages.length - 1) return 0;
@@ -47,7 +48,7 @@ class _AboutUsSliderState extends State<AboutUsSlider>
       setState(() {});
     });
 
-    Timer.periodic(Duration(seconds: 3), (_) {
+    timer = Timer.periodic(Duration(seconds: 3), (_) {
       controller.forward(from: 0.0);
     });
 
@@ -56,6 +57,7 @@ class _AboutUsSliderState extends State<AboutUsSlider>
 
   dispose() {
     controller.dispose();
+    timer.cancel();
     super.dispose();
   }
 
