@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'ozen',
+      title: 'õzen',
       themeMode: ThemeMode.dark,
       darkTheme: ThemeData(
         brightness: Brightness.dark,
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.light,
         canvasColor: Color(0xFFF7F7F7),
       ),
-      home: MainPage(),
+      home: IntroPage(),
       routes: {
         '/intro': (_) => IntroPage(),
         '/main': (_) => MainPage(),
