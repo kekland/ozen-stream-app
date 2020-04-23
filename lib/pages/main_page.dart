@@ -44,7 +44,7 @@ class _MainPageState extends State<MainPage> {
                       child: Row(
                         children: <Widget>[
                           IconButton(
-                            icon: Icon(Icons.menu),
+                            icon: Icon(Icons.settings),
                             onPressed: () {},
                           ),
                           Spacer(),

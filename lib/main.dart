@@ -8,7 +8,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'ozen',
       themeMode: ThemeMode.dark,
       darkTheme: ThemeData(
         brightness: Brightness.dark,
@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
       ),
       theme: ThemeData(
         brightness: Brightness.light,
+        canvasColor: Color(0xFFF7F7F7),
       ),
       home: MainPage(),
     );

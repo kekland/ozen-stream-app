@@ -35,7 +35,7 @@ class _AboutUsSliderState extends State<AboutUsSlider>
   void initState() {
     controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 250),
+      duration: Duration(milliseconds: 350),
     );
 
     animation = CurvedAnimation(parent: controller, curve: Curves.easeInOut);
@@ -79,6 +79,7 @@ class _AboutUsSliderState extends State<AboutUsSlider>
             style: TextStyle(
               fontSize: 18.0,
               fontWeight: FontWeight.w500,
+              color: context.textTheme.body1.color,
             ),
             child: Stack(
               children: [
