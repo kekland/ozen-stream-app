@@ -22,42 +22,51 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Stack(
-              children: [
-                HeartsAnimatorBar(
-                  controller: heartsController,
-                ),
-              ],
+      body: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Stack(
+                children: [
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: Padding(
+                      padding: const EdgeInsets.all(32.0),
+                      child: AppLogo(),
+                    ),
+                  ),
+                  HeartsAnimatorBar(
+                    controller: heartsController,
+                  ),
+                ],
+              ),
             ),
-          ),
-          AudioTunesBar(),
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 32.0,
-              right: 32.0,
-              top: 32.0,
+            AudioTunesBar(),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 32.0,
+                right: 32.0,
+                top: 32.0,
+              ),
+              child: SongNameWidget(
+                author: 'Mag Family',
+                title: 'Evening Luck',
+              ),
             ),
-            child: SongNameWidget(
-              author: 'Mag Family',
-              title: 'Evening Luck',
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 32.0,
+                right: 32.0,
+                bottom: 32.0,
+                top: 32.0,
+              ),
+              child: MainPageButtonBar(
+                onTapHeart: () => heartsController.addHeart(),
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 32.0,
-              right: 32.0,
-              bottom: 32.0,
-              top: 32.0,
-            ),
-            child: MainPageButtonBar(
-              onTapHeart: () => heartsController.addHeart(),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

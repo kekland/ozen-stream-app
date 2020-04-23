@@ -5,6 +5,7 @@ class AppLogo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Image.asset(
       'assets/ozen-logo.png',
+      width: 96.0,
     );
   }
 }
