@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:ozen_app/components/app_logo.dart';
 import 'package:ozen_app/components/main_page/about_us_slider.dart';
-import 'package:ozen_app/components/main_page/app_logo.dart';
 import 'package:ozen_app/components/main_page/audio_tunes_bar.dart';
 import 'package:ozen_app/components/main_page/button_bar.dart';
 import 'package:ozen_app/components/main_page/hearts_animator_bar.dart';
-import 'package:ozen_app/components/play_button_widget.dart';
 import 'package:ozen_app/components/song_name_widget.dart';
 
 class MainPage extends StatefulWidget {

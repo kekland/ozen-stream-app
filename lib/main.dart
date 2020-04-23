@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ozen_app/pages/intro_page.dart';
 import 'package:ozen_app/pages/main_page.dart';
+import 'package:ozen_app/pages/sign_in_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -21,6 +23,12 @@ class MyApp extends StatelessWidget {
         canvasColor: Color(0xFFF7F7F7),
       ),
       home: MainPage(),
+      routes: {
+        '/intro': (_) => IntroPage(),
+        '/main': (_) => MainPage(),
+        '/signIn': (_) => SignInPage(),
+        '/signUp': (_) => SignInPage(),
+      },
     );
   }
 }
