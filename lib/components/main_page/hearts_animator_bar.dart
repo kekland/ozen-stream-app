@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:ozen_app/extensions.dart';
 
 class HeartsController {
@@ -39,7 +40,7 @@ class HeartData {
 
   double scale({BuildContext context, DateTime now}) {
     double percentage = lifetimePercentage(now);
-    return 1.0 - percentage;
+    return percentage + 1.0;
   }
 
   Offset calculateOffset({BuildContext context, DateTime now}) {
@@ -56,6 +57,7 @@ class HeartData {
         child: Icon(
           Icons.favorite,
           color: color(context: context, now: now),
+          size: 32.0,
         ),
       ),
     );
@@ -73,53 +75,83 @@ class HeartsAnimatorBar extends StatefulWidget {
 
 Random random = new Random();
 
-class _HeartsAnimatorBarState extends State<HeartsAnimatorBar> {
+class _HeartsAnimatorBarState extends State<HeartsAnimatorBar>
+    with SingleTickerProviderStateMixin {
   List<HeartData> hearts;
+  Ticker ticker;
 
   @override
   void initState() {
     widget.controller.pushHeart = pushHeart;
+    hearts = [];
     super.initState();
+
+    ticker = this.createTicker((_) => setState(() => {}));
+
+    ticker.start();
   }
 
-  double getRandomValue(double amplitude, [bool hasNegatives = false]) {
-    if (hasNegatives) {
-      return (random.nextDouble() - 0.5) * 2.0 * amplitude;
-    } else {
-      return random.nextDouble() * amplitude;
-    }
+  dispose() {
+    ticker.stop();
+    ticker.dispose();
+    super.dispose();
+  }
+
+  double getRandomValue(double amplitude,
+      [double minValue = 0.0, bool hasNegatives = false]) {
+    double _amplitude = amplitude - minValue;
+    double _randValue = random.nextDouble() + ((hasNegatives) ? -0.5 : 0.0);
+    double _minValue = (_randValue < 0.0) ? -minValue : minValue;
+
+    return _randValue * _amplitude + _minValue;
   }
 
   void pushHeart() {
     hearts.add(HeartData(
       initialOffset: Offset(
-        getRandomValue(32.0, true),
-        getRandomValue(32.0, true),
+        getRandomValue(32.0, 0.0, true),
+        getRandomValue(32.0, 0.0, true),
       ),
       lifetimeDuration: Duration(
-        milliseconds: getRandomValue(300.0).round(),
+        milliseconds: getRandomValue(1000.0, 750.0).round(),
       ),
-      maxRisingHeight: getRandomValue(125.0),
+      maxRisingHeight: getRandomValue(125.0, 70.0),
       startTime: DateTime.now(),
       velocityVector: Offset(
-        getRandomValue(1.0, true),
-        getRandomValue(1.0),
+        getRandomValue(0.3, 0.3, true),
+        getRandomValue(2.0, 1.5, false),
       ),
     ));
   }
 
   void updateHearts({DateTime now}) {
-    hearts = hearts.where(
-      (h) => (now.difference(h.startTime) <= h.lifetimeDuration),
-    );
+    hearts = hearts
+        .where(
+          (h) => (now.difference(h.startTime) <= h.lifetimeDuration),
+        )
+        .toList();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        ...hearts.map((h) => h.buildWidget()),
-      ],
+    final now = DateTime.now();
+    updateHearts(now: now);
+    return Container(
+      child: Padding(
+        padding: const EdgeInsets.only(left: 104.0, bottom: 16.0),
+        child: Stack(
+          fit: StackFit.expand,
+          alignment: Alignment.bottomLeft,
+          children: [
+            ...hearts.map(
+              (h) => Align(
+                alignment: Alignment.bottomLeft,
+                child: h.buildWidget(context: context, now: now),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
