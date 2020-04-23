@@ -7,11 +7,13 @@ import 'package:ozen_app/extensions.dart';
 class SoundwaveWidget extends StatelessWidget {
   final List<double> bars;
   final double height;
+  final int barsPaintedPrimary;
 
   const SoundwaveWidget({
     Key key,
     this.height,
     this.bars,
+    this.barsPaintedPrimary,
   }) : super(key: key);
 
   Widget _buildBar({
@@ -24,7 +26,7 @@ class SoundwaveWidget extends StatelessWidget {
       margin: EdgeInsets.only(
         right: 6.0,
       ),
-      height: height * intensity,
+      height: (height / 1.4) * intensity,
       decoration: BoxDecoration(
         color: isPrimary ? context.theme.primaryColor : Colors.white,
       ),
@@ -35,16 +37,19 @@ class SoundwaveWidget extends StatelessWidget {
     BuildContext context,
     double intensityMultiplier = 1.0,
   }) {
-    List<Widget> list = bars
-        .map(
-          (v) => _buildBar(
-            context: context,
-            intensity: v * intensityMultiplier,
-            isPrimary: false,
-          ),
-        )
-        .cast<Widget>()
-        .toList();
+    List<Widget> list = [];
+
+    for (int i = 0; i < bars.length; i++) {
+      final v = bars[i];
+
+      list.add(
+        _buildBar(
+          context: context,
+          intensity: v * intensityMultiplier,
+          isPrimary: i < barsPaintedPrimary,
+        ),
+      );
+    }
 
     return list;
   }
@@ -53,6 +58,8 @@ class SoundwaveWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return OverflowBox(
       maxWidth: double.infinity,
+      minHeight: height,
+      maxHeight: height,
       alignment: Alignment.centerLeft,
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -69,7 +76,7 @@ class SoundwaveWidget extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: buildBars(
                 context: context,
-                intensityMultiplier: 0.33,
+                intensityMultiplier: 0.4,
               ),
             ),
           ),
@@ -82,11 +89,15 @@ class SoundwaveWidget extends StatelessWidget {
 class AlwaysScrollingSoundwaveWidget extends StatefulWidget {
   final double Function(int) intensityGenerator;
   final double height;
+  final bool isPlaying;
+  final int barsPaintedPrimary;
 
   const AlwaysScrollingSoundwaveWidget({
     Key key,
     this.intensityGenerator,
     this.height,
+    this.isPlaying,
+    this.barsPaintedPrimary,
   }) : super(key: key);
 
   @override
@@ -100,7 +111,7 @@ class _AlwaysScrollingSoundwaveWidgetState
   AnimationController scrollAnimation;
   List<double> bars;
   double width;
-  final Duration scrollDuration = Duration(seconds: 1);
+  final Duration scrollDuration = Duration(milliseconds: 500);
   final double barWidth = 10.0;
 
   @override
@@ -121,6 +132,8 @@ class _AlwaysScrollingSoundwaveWidgetState
       }
       setState(() {});
     });
+
+    scrollAnimation.forward(from: 0.0);
   }
 
   dispose() {
@@ -153,6 +166,7 @@ class _AlwaysScrollingSoundwaveWidgetState
       child: SoundwaveWidget(
         bars: bars ?? [],
         height: widget.height,
+        barsPaintedPrimary: widget.isPlaying ? widget.barsPaintedPrimary : 0,
       ),
     );
   }

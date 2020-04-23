@@ -13,22 +13,32 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(32.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Spacer(),
-            AudioTunesBar(),
-            SizedBox(height: 32.0),
-            SongNameWidget(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Spacer(),
+          AudioTunesBar(),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 32.0,
+              right: 32.0,
+              top: 32.0,
+            ),
+            child: SongNameWidget(
               author: 'Mag Family',
               title: 'Evening Luck',
             ),
-            SizedBox(height: 32.0),
-            MainPageButtonBar(),
-          ],
-        ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 32.0,
+              right: 32.0,
+              bottom: 32.0,
+              top: 32.0,
+            ),
+            child: MainPageButtonBar(),
+          ),
+        ],
       ),
     );
   }
