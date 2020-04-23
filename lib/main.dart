@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ozen_app/pages/intro_page.dart';
 import 'package:ozen_app/pages/main_page.dart';
+import 'package:ozen_app/pages/onboarding_page.dart';
 import 'package:ozen_app/pages/sign_in_page.dart';
 
 void main() => runApp(MyApp());
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
       home: IntroPage(),
       routes: {
         '/intro': (_) => IntroPage(),
+        '/onboarding': (_) => OnboardingPage(),
         '/main': (_) => MainPage(),
         '/signIn': (_) => SignInPage(),
         '/signUp': (_) => SignInPage(),

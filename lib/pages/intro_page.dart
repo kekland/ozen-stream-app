@@ -2,6 +2,7 @@ import 'package:circular_reveal_animation/circular_reveal_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:ozen_app/components/app_logo.dart';
 import 'package:ozen_app/pages/onboarding_page.dart';
+import 'package:ozen_app/utils.dart';
 
 import 'main_page.dart';
 
@@ -21,19 +22,7 @@ class _IntroPageState extends State<IntroPage> {
 
   checkOnboarding() async {
     await Future.delayed(Duration(seconds: 1));
-    Navigator.of(context).pushReplacement(
-      PageRouteBuilder(
-          transitionDuration: Duration(milliseconds: 1250),
-          pageBuilder: (context, animation, animation2) {
-            final _animation =
-                CurvedAnimation(curve: Curves.easeInOut, parent: animation);
-            return CircularRevealAnimation(
-              animation: _animation,
-              centerAlignment: Alignment.center,
-              child: OnboardingPage(),
-            );
-          }),
-    );
+    pushAnimatedRoute(context: context, builder: (_) => OnboardingPage());
   }
 
   @override
