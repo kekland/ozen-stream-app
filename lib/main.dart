@@ -18,10 +18,12 @@ class MyApp extends StatelessWidget {
         primaryColor: Color(0xFF2BAAE2),
         canvasColor: Colors.black,
         cardColor: Color(0xFF2B2B2B),
+        accentColor: Color(0xFF2BAAE2),
       ),
       theme: ThemeData(
         brightness: Brightness.light,
         canvasColor: Color(0xFFF7F7F7),
+        accentColor: Color(0xFF2BAAE2),
       ),
       home: IntroPage(),
       routes: {

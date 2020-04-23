@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ozen_app/components/app_logo.dart';
 import 'package:ozen_app/pages/main_page.dart';
 import 'package:ozen_app/pages/sign_in_page.dart';
+import 'package:ozen_app/pages/sign_up_page.dart';
 import 'package:ozen_app/utils.dart';
 import 'package:snaplist/snaplist.dart';
 import 'package:ozen_app/extensions.dart';
@@ -52,7 +53,7 @@ List<Widget Function(BuildContext, VoidCallback, VoidCallback)>
                   onPressed: () {
                     pushAnimatedRoute(
                       context: context,
-                      builder: (_) => SignInPage(),
+                      builder: (_) => SignUpPage(),
                     );
                   },
                   color: context.theme.primaryColor,

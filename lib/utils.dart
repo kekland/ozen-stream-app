@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 
 void pushAnimatedRoute({
   BuildContext context,
+  Duration duration = const Duration(milliseconds: 1250),
   Widget Function(BuildContext) builder,
 }) {
   Navigator.of(context).pushReplacement(
     PageRouteBuilder(
-        transitionDuration: Duration(milliseconds: 1250),
+        transitionDuration: duration,
         pageBuilder: (context, animation, animation2) {
           final _animation =
               CurvedAnimation(curve: Curves.easeInOut, parent: animation);
