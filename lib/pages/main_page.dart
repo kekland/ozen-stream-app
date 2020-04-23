@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ozen_app/components/main_page/audio_tunes_bar.dart';
 import 'package:ozen_app/components/main_page/button_bar.dart';
 import 'package:ozen_app/components/play_button_widget.dart';
 import 'package:ozen_app/components/song_name_widget.dart';
@@ -18,11 +19,7 @@ class _MainPageState extends State<MainPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Spacer(),
-            PlayButton(
-              isPlaying: false,
-              small: false,
-              onTap: () {},
-            ),
+            AudioTunesBar(),
             SizedBox(height: 32.0),
             SongNameWidget(
               author: 'Mag Family',
