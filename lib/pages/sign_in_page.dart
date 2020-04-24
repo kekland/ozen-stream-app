@@ -62,7 +62,7 @@ class _SignInPageState extends State<SignInPage> {
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                   onPressed: () {
-                    pushAnimatedRoute(
+                    pushAndReplaceAnimatedRoute(
                       context: context,
                       builder: (_) => MainPage(),
                     );
@@ -75,7 +75,7 @@ class _SignInPageState extends State<SignInPage> {
                 child: FlatButton(
                   child: Text('Создать аккаунт'),
                   onPressed: () {
-                    pushAnimatedRoute(
+                    pushAndReplaceAnimatedRoute(
                       context: context,
                       duration: Duration(milliseconds: 750),
                       builder: (_) => SignUpPage(),
@@ -95,7 +95,7 @@ class _SignInPageState extends State<SignInPage> {
                 child: FlatButton(
                   child: Text('Слушать музыку без регистрации'),
                   onPressed: () {
-                    pushAnimatedRoute(
+                    pushAndReplaceAnimatedRoute(
                       context: context,
                       builder: (_) => MainPage(),
                     );

@@ -1,8 +1,35 @@
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:ozen_app/components/sliding_panel.dart';
+import 'package:ozen_app/pages/share_panel.dart';
+import 'package:ozen_app/extensions.dart';
+import 'dart:math';
 
 void pushAnimatedRoute({
+  BuildContext context,
+  Duration duration = const Duration(milliseconds: 1250),
+  Widget Function(BuildContext) builder,
+}) {
+  Navigator.of(context).push(
+    PageRouteBuilder(
+      transitionDuration: duration,
+      fullscreenDialog: true,
+      opaque: false,
+      pageBuilder: (context, animation, animation2) {
+        final _animation =
+            CurvedAnimation(curve: Curves.easeInOut, parent: animation);
+        return CircularRevealAnimation(
+          animation: _animation,
+          centerAlignment: Alignment.center,
+          child: builder(context),
+        );
+      },
+    ),
+  );
+}
+
+void pushAndReplaceAnimatedRoute({
   BuildContext context,
   Duration duration = const Duration(milliseconds: 1250),
   Widget Function(BuildContext) builder,
@@ -19,6 +46,52 @@ void pushAnimatedRoute({
           child: builder(context),
         );
       },
+    ),
+  );
+}
+
+void showCustomSharePageModalSheet({BuildContext context}) {
+  showCustomModalBottomSheet(
+    context: context,
+    barrierColor: Colors.black.withOpacity(0.6),
+    builder: (_, scrollController) => SharePanel(),
+    containerWidget: (_, animation, child) => Material(
+      type: MaterialType.transparency,
+      child: Container(
+        child: Column(
+          children: [
+            Expanded(
+              child: Center(
+                child: Transform.translate(
+                  offset: Offset(0.0, 50.0 * (1.0 - animation.value)),
+                  child: Opacity(
+                    opacity: (animation.value * animation.value),
+                    child: SharePanelSong(
+                      albumCover:
+                          'https://i.pinimg.com/originals/ec/86/02/ec86020d19e2a36711ff12c4190d6cdb.jpg',
+                      author: 'Daft Punk',
+                      title: 'Around the world',
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(12.0),
+                ),
+              ),
+              child: SlidingPanel(
+                expandHeight: false,
+                title: 'Добавить в',
+                child: child,
+              ),
+            ),
+          ],
+        ),
+      ),
     ),
   );
 }

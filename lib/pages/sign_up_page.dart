@@ -72,7 +72,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                   onPressed: () {
-                    pushAnimatedRoute(
+                    pushAndReplaceAnimatedRoute(
                       context: context,
                       builder: (_) => MainPage(),
                     );
@@ -89,7 +89,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 child: FlatButton(
                   child: Text('Войти'),
                   onPressed: () {
-                    pushAnimatedRoute(
+                    pushAndReplaceAnimatedRoute(
                       context: context,
                       duration: Duration(milliseconds: 750),
                       builder: (_) => SignInPage(),

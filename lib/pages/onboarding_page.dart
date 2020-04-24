@@ -51,7 +51,7 @@ List<Widget Function(BuildContext, VoidCallback, VoidCallback)>
                 child: RaisedButton(
                   child: Text('Зарегистрироваться'),
                   onPressed: () {
-                    pushAnimatedRoute(
+                    pushAndReplaceAnimatedRoute(
                       context: context,
                       builder: (_) => SignUpPage(),
                     );
@@ -73,7 +73,7 @@ List<Widget Function(BuildContext, VoidCallback, VoidCallback)>
                 child: FlatButton(
                   child: Text('Слушать музыку прямо сейчас'),
                   onPressed: () {
-                    pushAnimatedRoute(
+                    pushAndReplaceAnimatedRoute(
                       context: context,
                       builder: (_) => MainPage(),
                     );

@@ -124,12 +124,8 @@ class _MainPageState extends State<MainPage> {
                         child: HistoryPanel(scrollController: scrollController),
                       ),
                     ),
-                    onTapShare: () => showModalBottomSheet(
+                    onTapShare: () => showCustomSharePageModalSheet(
                       context: context,
-                      builder: (_) => SlidingPanel(
-                        title: 'Открыть в',
-                        child: SharePanel(),
-                      ),
                     ),
                   ),
                 ),

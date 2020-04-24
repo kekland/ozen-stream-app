@@ -3,17 +3,19 @@ import 'package:flutter/material.dart';
 class SlidingPanel extends StatelessWidget {
   final Widget child;
   final String title;
+  final bool expandHeight;
 
   const SlidingPanel({
     Key key,
     this.child,
     this.title,
+    this.expandHeight = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height / 2.0,
+      height: expandHeight ? MediaQuery.of(context).size.height / 2.0 : null,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -44,9 +46,11 @@ class SlidingPanel extends StatelessWidget {
             ),
           ),
           SizedBox(height: 24.0),
-          Expanded(
-            child: child,
-          ),
+          if (expandHeight)
+            Expanded(
+              child: child,
+            ),
+          if (!expandHeight) child
         ],
       ),
     );

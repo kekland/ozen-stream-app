@@ -22,7 +22,7 @@ class _IntroPageState extends State<IntroPage> {
 
   checkOnboarding() async {
     await Future.delayed(Duration(seconds: 1));
-    pushAnimatedRoute(context: context, builder: (_) => OnboardingPage());
+    pushAndReplaceAnimatedRoute(context: context, builder: (_) => OnboardingPage());
   }
 
   @override
