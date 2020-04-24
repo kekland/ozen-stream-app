@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ozen_app/api/track.dart';
 
 class SharePanelButton extends StatelessWidget {
   final IconData icon;
@@ -91,15 +92,10 @@ class _SharePanelState extends State<SharePanel> {
 }
 
 class SharePanelSong extends StatelessWidget {
-  final String albumCover;
-  final String title;
-  final String author;
-
+  final Track track;
   const SharePanelSong({
     Key key,
-    this.albumCover,
-    this.title,
-    this.author,
+    this.track,
   }) : super(key: key);
 
   @override
@@ -115,7 +111,7 @@ class SharePanelSong extends StatelessWidget {
               12.0,
             ),
             child: Image.network(
-              albumCover,
+              track.albumCoverUrl,
               width: 160.0,
               height: 160.0,
               fit: BoxFit.cover,
@@ -127,7 +123,7 @@ class SharePanelSong extends StatelessWidget {
           color: Colors.black,
           padding: const EdgeInsets.all(4.0),
           child: Text(
-            title,
+            track.title,
             style: TextStyle(
               fontSize: 22.0,
               color: Colors.white,
@@ -139,7 +135,7 @@ class SharePanelSong extends StatelessWidget {
           color: Colors.black,
           padding: const EdgeInsets.all(4.0),
           child: Text(
-            author,
+            track.author,
             style: TextStyle(
               color: Colors.white.withOpacity(0.7),
               fontSize: 16.0,

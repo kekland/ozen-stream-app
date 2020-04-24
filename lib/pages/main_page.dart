@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:ozen_app/components/app_logo.dart';
-import 'package:ozen_app/components/main_page/about_us_slider.dart';
 import 'package:ozen_app/components/main_page/audio_tunes_bar.dart';
 import 'package:ozen_app/components/main_page/button_bar.dart';
 import 'package:ozen_app/components/main_page/hearts_animator_bar.dart';
 import 'package:ozen_app/components/sliding_panel.dart';
 import 'package:ozen_app/components/song_name_widget.dart';
-import 'package:ozen_app/pages/chat_panel.dart';
 import 'package:ozen_app/pages/history_panel.dart';
-import 'package:ozen_app/pages/settings_panel.dart';
-import 'package:ozen_app/pages/share_panel.dart';
+import 'package:ozen_app/state/binding.dart';
+import 'package:ozen_app/state/state.dart';
 import 'package:ozen_app/utils.dart';
 
 class MainPage extends StatefulWidget {
@@ -28,6 +25,8 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    final state = ModelBinding.of<AppState>(context);
+
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -36,7 +35,7 @@ class _MainPageState extends State<MainPage> {
               color: Colors.black,
             ),
             child: Image.network(
-              'https://i.pinimg.com/originals/ec/86/02/ec86020d19e2a36711ff12c4190d6cdb.jpg',
+              state?.currentTrack?.albumCoverUrl,
               fit: BoxFit.cover,
               width: double.infinity,
               height: double.infinity,
@@ -99,8 +98,8 @@ class _MainPageState extends State<MainPage> {
                       top: 32.0,
                     ),
                     child: SongNameWidget(
-                      author: 'Daft Punk',
-                      title: 'Around the world',
+                      author: state?.currentTrack?.author ?? 'Загрузка',
+                      title: state?.currentTrack?.title ?? '',
                     ),
                   ),
                   Padding(
@@ -123,9 +122,12 @@ class _MainPageState extends State<MainPage> {
                               HistoryPanel(scrollController: scrollController),
                         ),
                       ),
-                      onTapShare: () => showCustomSharePageModalSheet(
-                        context: context,
-                      ),
+                      onTapShare: state.currentTrack != null
+                          ? () => showCustomSharePageModalSheet(
+                                context: context,
+                                track: state.currentTrack,
+                              )
+                          : null,
                     ),
                   ),
                 ],

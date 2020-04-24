@@ -27,6 +27,8 @@ dependencies:
   snaplist: ^0.1.8
   modal_bottom_sheet: ^0.1.5
   font_awesome_flutter: ^8.8.1
+  audio_service: ^0.7.2
+  just_audio: ^0.1.7
 
 dev_dependencies:
   flutter_test:

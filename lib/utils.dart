@@ -1,6 +1,7 @@
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:ozen_app/api/track.dart';
 import 'package:ozen_app/components/chat/chat_current_track_widget.dart';
 import 'package:ozen_app/components/sliding_panel.dart';
 import 'package:ozen_app/pages/chat_panel.dart';
@@ -52,7 +53,7 @@ void pushAndReplaceAnimatedRoute({
   );
 }
 
-void showCustomSharePageModalSheet({BuildContext context}) {
+void showCustomSharePageModalSheet({BuildContext context, Track track}) {
   showCustomModalBottomSheet(
     context: context,
     barrierColor: Colors.black.withOpacity(0.6),
@@ -69,10 +70,7 @@ void showCustomSharePageModalSheet({BuildContext context}) {
                   child: Opacity(
                     opacity: (animation.value * animation.value),
                     child: SharePanelSong(
-                      albumCover:
-                          'https://i.pinimg.com/originals/ec/86/02/ec86020d19e2a36711ff12c4190d6cdb.jpg',
-                      author: 'Daft Punk',
-                      title: 'Around the world',
+                      track: track,
                     ),
                   ),
                 ),
