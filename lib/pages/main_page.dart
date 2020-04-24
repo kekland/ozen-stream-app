@@ -33,41 +33,16 @@ class _MainPageState extends State<MainPage> {
   }
 
   startAudioService() async {
-    if (!AudioService.running) {
-      await AudioService.start(
-        backgroundTaskEntrypoint: ozenBackgroundTaskEntrypoint,
-      );
-    }
-
-    AudioService.currentMediaItemStream.listen((mediaItem) {
-      ModelBinding.update<AppState>(
-        context,
-        ModelBinding.of<AppState>(context).copyWith(
-          currentTrack: Track(
-            author: mediaItem.artist,
-            albumCoverUrl: mediaItem.artUri,
-            title: mediaItem.title,
-          ),
-        ),
-      );
-    });
-
-    AudioService.playbackStateStream.listen((state) {
-      ModelBinding.update<AppState>(
-        context,
-        ModelBinding.of<AppState>(context).copyWith(
-          isPlaying: state.basicState == BasicPlaybackState.playing,
-        ),
-      );
-    });
+    loadData();
+    timer = Timer.periodic(Duration(seconds: 10), loadData);
 
     ModelBinding.of<AppState>(context).copyWith(
       isPlaying:
-          AudioService.playbackState.basicState == BasicPlaybackState.playing,
+          AudioService?.playbackState?.basicState == BasicPlaybackState.playing,
     );
   }
 
-  loadData() async {
+  loadData([dynamic _]) async {
     updateState(context: context);
   }
 

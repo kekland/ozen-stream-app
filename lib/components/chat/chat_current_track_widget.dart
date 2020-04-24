@@ -1,4 +1,6 @@
+import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
+import 'package:ozen_app/api/audio_service.dart';
 import 'package:ozen_app/components/play_button_widget.dart';
 import 'package:ozen_app/components/song_name_widget.dart';
 import 'package:ozen_app/state/binding.dart';
@@ -17,15 +19,10 @@ class ChatCurrentTrackWidget extends StatelessWidget {
         PlayButton(
           isPlaying: false,
           onTap: () {
-            ModelBinding.update(
-              context,
-              AppState(
-                currentTrack: state.currentTrack,
-                history: state.history,
-                isLoading: state.isLoading,
-                isPlaying: !state.isPlaying,
-              ),
-            );
+            if (state.isPlaying)
+              AudioService.pause();
+            else
+              playAudioService();
           },
           small: true,
         ),

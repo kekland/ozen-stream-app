@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
+import 'package:ozen_app/api/audio_service.dart';
 import 'package:ozen_app/components/play_button_widget.dart';
 import 'package:ozen_app/components/soundwave_widget.dart';
 import 'package:ozen_app/state/binding.dart';
@@ -41,8 +42,10 @@ class _AudioTunesBarState extends State<AudioTunesBar> {
                 child: PlayButton(
                   isPlaying: state.isPlaying,
                   onTap: () {
-                    if (state.isPlaying) AudioService.pause();
-                    else AudioService.play();
+                    if (state.isPlaying)
+                      AudioService.pause();
+                    else
+                      playAudioService();
                   },
                   small: false,
                 ),

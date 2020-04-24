@@ -17,6 +17,20 @@ final pauseControl = MediaControl(
   action: MediaAction.pause,
 );
 
+final stopControl = MediaControl(
+  androidIcon: 'drawable/ic_stop',
+  label: 'Stop',
+  action: MediaAction.stop,
+);
+
+void playAudioService() async {
+  if (AudioService.running) {
+    AudioService.play();
+  } else {
+    AudioService.start(backgroundTaskEntrypoint: ozenBackgroundTaskEntrypoint);
+  }
+}
+
 void ozenBackgroundTaskEntrypoint() {
   AudioServiceBackground.run(() => MyBackgroundTask());
 }
@@ -33,7 +47,7 @@ class MyBackgroundTask extends BackgroundAudioTask {
     await AudioServiceBackground.androidForceEnableMediaButtons();
 
     AudioServiceBackground.setState(
-      controls: [playControl],
+      controls: [playControl, stopControl],
       basicState: BasicPlaybackState.paused,
     );
 
@@ -42,6 +56,7 @@ class MyBackgroundTask extends BackgroundAudioTask {
 
     await completer.future;
 
+    player.dispose();
     AudioServiceBackground.setState(
       controls: [],
       basicState: BasicPlaybackState.playing,
@@ -72,16 +87,16 @@ class MyBackgroundTask extends BackgroundAudioTask {
   void onPlay() {
     player.play();
     AudioServiceBackground.setState(
-      controls: [pauseControl],
+      controls: [pauseControl, stopControl],
       basicState: BasicPlaybackState.playing,
     );
   }
 
   @override
   void onPause() {
-    player.pause();
+    player.stop();
     AudioServiceBackground.setState(
-      controls: [playControl],
+      controls: [playControl, stopControl],
       basicState: BasicPlaybackState.paused,
     );
   }
