@@ -4,7 +4,20 @@ import 'package:ozen_app/state/binding.dart';
 import 'package:ozen_app/state/state.dart';
 import 'package:requests/requests.dart';
 
-Future<void> fetchState({BuildContext context}) async {
+Future<Track> getCurrentTrack() async {
+  try {
+    final response = await Requests.get(
+        'https://public.radio.co/stations/scc370f2b2/status');
+
+    final body = response.json();
+
+    return Track.fromJson(body['current_track']);
+  } catch (e) {
+    print(e);
+  }
+}
+
+Future<void> updateState({BuildContext context}) async {
   try {
     final response = await Requests.get(
         'https://public.radio.co/stations/scc370f2b2/status');

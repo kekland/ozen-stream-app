@@ -34,10 +34,8 @@ class _PlayButtonState extends State<PlayButton>
   didUpdateWidget(oldWidget) {
     if (!oldWidget.isPlaying && widget.isPlaying) {
       iconAnimation.forward();
-      AudioService.play();
     } else if (oldWidget.isPlaying && !widget.isPlaying) {
       iconAnimation.reverse();
-      AudioService.pause();
     }
 
     super.didUpdateWidget(oldWidget);

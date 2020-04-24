@@ -4,6 +4,7 @@ import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:ozen_app/api/api.dart';
 import 'package:ozen_app/api/audio_service.dart';
+import 'package:ozen_app/api/track.dart';
 import 'package:ozen_app/components/app_logo.dart';
 import 'package:ozen_app/components/main_page/audio_tunes_bar.dart';
 import 'package:ozen_app/components/main_page/button_bar.dart';
@@ -28,22 +29,46 @@ class _MainPageState extends State<MainPage> {
     heartsController = HeartsController();
     super.initState();
 
-    AudioService.start(backgroundTaskEntrypoint: ozenBackgroundTaskEntrypoint);
+    startAudioService();
+  }
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      loadData();
+  startAudioService() async {
+    if (!AudioService.running) {
+      await AudioService.start(
+        backgroundTaskEntrypoint: ozenBackgroundTaskEntrypoint,
+      );
+    }
+
+    AudioService.currentMediaItemStream.listen((mediaItem) {
+      ModelBinding.update<AppState>(
+        context,
+        ModelBinding.of<AppState>(context).copyWith(
+          currentTrack: Track(
+            author: mediaItem.artist,
+            albumCoverUrl: mediaItem.artUri,
+            title: mediaItem.title,
+          ),
+        ),
+      );
     });
 
-    timer = Timer.periodic(
-      Duration(
-        seconds: 10,
-      ),
-      (_) => loadData(),
+    AudioService.playbackStateStream.listen((state) {
+      ModelBinding.update<AppState>(
+        context,
+        ModelBinding.of<AppState>(context).copyWith(
+          isPlaying: state.basicState == BasicPlaybackState.playing,
+        ),
+      );
+    });
+
+    ModelBinding.of<AppState>(context).copyWith(
+      isPlaying:
+          AudioService.playbackState.basicState == BasicPlaybackState.playing,
     );
   }
 
   loadData() async {
-    fetchState(context: context);
+    updateState(context: context);
   }
 
   dispose() {

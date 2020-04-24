@@ -12,7 +12,8 @@
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="ozen_app"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:usesCleartextTraffic="true">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -36,7 +37,7 @@
             <action android:name="android.media.browse.MediaBrowserService" />
           </intent-filter>
         </service>
-    
+
         <receiver android:name="androidx.media.session.MediaButtonReceiver" >
           <intent-filter>
             <action android:name="android.intent.action.MEDIA_BUTTON" />
