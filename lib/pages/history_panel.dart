@@ -5,6 +5,9 @@ import 'package:ozen_app/components/song_name_widget.dart';
 import 'package:ozen_app/extensions.dart';
 
 class HistoryPanel extends StatefulWidget {
+  final ScrollController scrollController;
+
+  const HistoryPanel({Key key, this.scrollController}) : super(key: key);
   @override
   _HistoryPanelState createState() => _HistoryPanelState();
 }
@@ -13,8 +16,13 @@ class _HistoryPanelState extends State<HistoryPanel> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      controller: widget.scrollController,
       physics: BouncingScrollPhysics(),
-      padding: const EdgeInsets.all(24.0),
+      padding: const EdgeInsets.only(
+        left: 24.0,
+        right: 24.0,
+        bottom: 24.0,
+      ),
       child: Column(
         children: [
           _HistorySong(
@@ -72,14 +80,6 @@ class _HistorySong extends StatelessWidget {
             PlayingAnimatedIcon(
               color: context.theme.primaryColor,
             ),
-            SizedBox(width: 8.0),
-            Text(
-              'сейчас играет',
-              style: TextStyle(
-                color: context.theme.primaryColor,
-                fontWeight: FontWeight.w500,
-              ),
-            )
           ]
         ],
       ),

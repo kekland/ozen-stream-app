@@ -113,7 +113,7 @@ class _HeartsAnimatorBarState extends State<HeartsAnimatorBar>
         getRandomValue(32.0, 0.0, true),
       ),
       lifetimeDuration: Duration(
-        milliseconds: getRandomValue(1000.0, 750.0).round(),
+        milliseconds: getRandomValue(2000.0, 1250.0).round(),
       ),
       maxRisingHeight: getRandomValue(125.0, 70.0),
       startTime: DateTime.now(),
@@ -146,7 +146,10 @@ class _HeartsAnimatorBarState extends State<HeartsAnimatorBar>
             ...hearts.map(
               (h) => Align(
                 alignment: Alignment.bottomLeft,
-                child: h.buildWidget(context: context, now: now),
+                child: Transform.translate(
+                  offset: Offset(0.0, 72.0),
+                  child: h.buildWidget(context: context, now: now),
+                ),
               ),
             ),
           ],

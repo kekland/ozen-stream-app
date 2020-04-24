@@ -25,6 +25,7 @@ dependencies:
   cupertino_icons: ^0.1.2
   circular_reveal_animation: ^1.1.5
   snaplist: ^0.1.8
+  modal_bottom_sheet: ^0.1.5
   font_awesome_flutter: ^8.8.1
 
 dev_dependencies:

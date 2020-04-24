@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:ozen_app/components/app_logo.dart';
 import 'package:ozen_app/components/main_page/about_us_slider.dart';
 import 'package:ozen_app/components/main_page/audio_tunes_bar.dart';
@@ -10,6 +11,7 @@ import 'package:ozen_app/pages/chat_panel.dart';
 import 'package:ozen_app/pages/history_panel.dart';
 import 'package:ozen_app/pages/settings_panel.dart';
 import 'package:ozen_app/pages/share_panel.dart';
+import 'package:ozen_app/utils.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -115,11 +117,11 @@ class _MainPageState extends State<MainPage> {
                         child: ChatPanel(),
                       ),
                     ),
-                    onTapHistory: () => showModalBottomSheet(
+                    onTapHistory: () => showCustomBottomSheet(
                       context: context,
-                      builder: (_) => SlidingPanel(
+                      builder: (_, scrollController) => SlidingPanel(
                         title: 'История',
-                        child: HistoryPanel(),
+                        child: HistoryPanel(scrollController: scrollController),
                       ),
                     ),
                     onTapShare: () => showModalBottomSheet(
