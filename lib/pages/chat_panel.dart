@@ -18,15 +18,34 @@ class _ChatPanelState extends State<ChatPanel> {
       children: <Widget>[
         Expanded(
           child: ListView(
-            controller: widget.scrollController,
             reverse: true,
             physics: BouncingScrollPhysics(),
             padding: const EdgeInsets.only(
               left: 24.0,
               right: 24.0,
-              bottom: 24.0,
+              bottom: 8.0,
             ),
             children: [
+              ChatMessage(
+                body: 'Hi!',
+                username: 'kekland',
+              ),
+              SizedBox(height: 16.0),
+              ChatMessage(
+                body: 'Hi!',
+                username: 'kekland',
+              ),
+              SizedBox(height: 16.0),
+              ChatMessage(
+                body: 'Hi!',
+                username: 'kekland',
+              ),
+              SizedBox(height: 16.0),
+              ChatMessage(
+                body: 'Hi!',
+                username: 'kekland',
+              ),
+              SizedBox(height: 16.0),
               ChatMessage(
                 body: 'Hi!',
                 username: 'kekland',
@@ -37,6 +56,16 @@ class _ChatPanelState extends State<ChatPanel> {
         Container(
           width: double.infinity,
           height: 64.0,
+          margin: const EdgeInsets.only(
+            left: 12.0,
+            right: 12.0,
+            top: 8.0,
+            bottom: 12.0,
+          ),
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(12.0),
+          ),
           child: ChatField(),
         ),
       ],

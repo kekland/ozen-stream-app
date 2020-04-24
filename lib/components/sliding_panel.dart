@@ -16,8 +16,11 @@ class SlidingPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height -
+        MediaQuery.of(context).viewInsets.bottom;
+
     return Container(
-      height: expandHeight ? MediaQuery.of(context).size.height * maxHeight : null,
+      height: expandHeight ? (height) * maxHeight : null,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

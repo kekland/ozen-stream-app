@@ -105,9 +105,10 @@ void showCustomChatPageModalSheet({BuildContext context}) {
     builder: (_, scrollController) => ChatPanel(
       scrollController: scrollController,
     ),
-    containerWidget: (_, animation, child) => Material(
-      type: MaterialType.transparency,
-      child: Container(
+    containerWidget: (_, animation, child) => Scaffold(
+      backgroundColor: Colors.transparent,
+      resizeToAvoidBottomInset: false,
+      body: Container(
         child: Column(
           children: [
             Spacer(),
@@ -128,9 +129,12 @@ void showCustomChatPageModalSheet({BuildContext context}) {
               child: SlidingPanel(
                 expandHeight: true,
                 title: 'Чат',
-                maxHeight: 0.6,
+                maxHeight: 0.5,
                 child: child,
               ),
+            ),
+            SizedBox(
+              height: MediaQuery.of(context).viewInsets.bottom,
             ),
           ],
         ),
