@@ -28,7 +28,11 @@ class SlidingPanel extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(24.0),
+          padding: const EdgeInsets.only(
+            top: 24.0,
+            left: 24.0,
+            right: 24.0,
+          ),
           child: Text(
             title,
             style: TextStyle(
@@ -37,7 +41,9 @@ class SlidingPanel extends StatelessWidget {
             ),
           ),
         ),
-        child,
+        Expanded(
+          child: child,
+        ),
       ],
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ozen_app/extensions.dart';
 
-class PlayButton extends StatelessWidget {
+class PlayButton extends StatefulWidget {
   final bool small;
   final VoidCallback onTap;
   final bool isPlaying;
@@ -13,23 +13,35 @@ class PlayButton extends StatelessWidget {
     this.onTap,
   }) : super(key: key);
 
-  Widget _buildIcon() {
-    if (isPlaying) {
-      return Icon(
-        Icons.pause,
-        size: 64.0,
-      );
-    } else {
-      return Icon(
-        Icons.play_arrow,
-        size: 64.0,
-      );
-    }
+  @override
+  _PlayButtonState createState() => _PlayButtonState();
+}
+
+class _PlayButtonState extends State<PlayButton>
+    with SingleTickerProviderStateMixin {
+  AnimationController iconAnimation;
+
+  @override
+  void initState() {
+    iconAnimation = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 250),
+    );
+    super.initState();
+  }
+
+  didUpdateWidget(oldWidget) {
+    if (widget.isPlaying)
+      iconAnimation.forward();
+    else
+      iconAnimation.reverse();
+
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
   Widget build(BuildContext context) {
-    final diameter = small ? 48.0 : 144.0;
+    final diameter = widget.small ? 48.0 : 144.0;
     return Container(
       width: diameter,
       height: diameter,
@@ -40,9 +52,15 @@ class PlayButton extends StatelessWidget {
       child: Material(
         type: MaterialType.transparency,
         child: InkWell(
-          onTap: onTap,
+          onTap: widget.onTap,
           borderRadius: BorderRadius.circular(diameter / 2.0),
-          child: _buildIcon(),
+          child: Center(
+            child: AnimatedIcon(
+              size: 48.0,
+              progress: iconAnimation,
+              icon: AnimatedIcons.play_pause,
+            ),
+          ),
         ),
       ),
     );

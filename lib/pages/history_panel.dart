@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ozen_app/components/clickable_panel_widget.dart';
 import 'package:ozen_app/components/playing_animated_icon.dart';
 import 'package:ozen_app/components/song_name_widget.dart';
 import 'package:ozen_app/extensions.dart';
@@ -18,8 +19,15 @@ class _HistoryPanelState extends State<HistoryPanel> {
           _HistorySong(
             isPlayingNow: true,
           ),
+          SizedBox(height: 16.0),
           _HistorySong(),
+          SizedBox(height: 16.0),
           _HistorySong(),
+          SizedBox(height: 16.0),
+          _HistorySong(),
+          SizedBox(height: 16.0),
+          _HistorySong(),
+          SizedBox(height: 16.0),
           _HistorySong(),
         ],
       ),
@@ -34,12 +42,29 @@ class _HistorySong extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return ClickablePanelWidget(
       child: Row(
         children: <Widget>[
-          SongNameWidget(
-            author: 'kekland',
-            title: 'Lost in space',
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'kekland',
+                style: TextStyle(
+                  color: context.textTheme.caption.color,
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              Text(
+                'Lost in space',
+                style: TextStyle(
+                  fontSize: 22.0,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
           ),
           Spacer(),
           if (isPlayingNow) ...[

@@ -18,7 +18,7 @@ class SongNameWidget extends StatelessWidget {
           child: Text(
             author,
             style: TextStyle(
-              color: context.textTheme.caption.color,
+              color: Colors.white.withOpacity(0.7),
               fontSize: 16.0,
               fontWeight: FontWeight.w500,
             ),
@@ -31,6 +31,7 @@ class SongNameWidget extends StatelessWidget {
             title,
             style: TextStyle(
               fontSize: 22.0,
+              color: Colors.white,
               fontWeight: FontWeight.w500,
             ),
           ),
