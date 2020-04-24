@@ -24,10 +24,11 @@ final stopControl = MediaControl(
 );
 
 void playAudioService() async {
-  if (AudioService.running) {
-    AudioService.play();
+  if (!AudioService.running) {
+    await AudioService.start(
+        backgroundTaskEntrypoint: ozenBackgroundTaskEntrypoint);
   } else {
-    AudioService.start(backgroundTaskEntrypoint: ozenBackgroundTaskEntrypoint);
+    AudioService.play();
   }
 }
 
@@ -45,12 +46,13 @@ class MyBackgroundTask extends BackgroundAudioTask {
   Future<void> onStart() async {
     await player.setUrl('http://streaming.radio.co/scc370f2b2/listen');
     await AudioServiceBackground.androidForceEnableMediaButtons();
+    player.play();
 
     AudioServiceBackground.setState(
-      controls: [playControl, stopControl],
-      basicState: BasicPlaybackState.paused,
+      controls: [pauseControl, stopControl],
+      basicState: BasicPlaybackState.playing,
     );
-
+    
     await getCurrentMediaItem();
     timer = Timer.periodic(Duration(seconds: 10), getCurrentMediaItem);
 

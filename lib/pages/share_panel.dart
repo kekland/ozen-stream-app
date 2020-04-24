@@ -104,16 +104,16 @@ class SharePanelSong extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          width: 160.0,
-          height: 160.0,
+          width: 240.0,
+          height: 240.0,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(
               12.0,
             ),
             child: Image.network(
               track.albumCoverUrl,
-              width: 160.0,
-              height: 160.0,
+              width: 240.0,
+              height: 240.0,
               fit: BoxFit.cover,
             ),
           ),

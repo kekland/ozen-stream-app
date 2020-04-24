@@ -30,15 +30,15 @@ class _HistoryPanelState extends State<HistoryPanel> {
       ),
       child: Column(
         children: [
-          ...state.history.map(
-            (track) => Padding(
-              padding: const EdgeInsets.only(bottom: 16.0),
-              child: _HistorySong(
-                track: track,
-                isPlayingNow: state.history.indexOf(track) == 0,
+          ...state.history.where((t) => t.author.isNotEmpty).map(
+                (track) => Padding(
+                  padding: const EdgeInsets.only(bottom: 16.0),
+                  child: _HistorySong(
+                    track: track,
+                    isPlayingNow: state.history.indexOf(track) == 0,
+                  ),
+                ),
               ),
-            ),
-          ),
         ],
       ),
     );

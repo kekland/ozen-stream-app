@@ -30,6 +30,9 @@ dependencies:
   audio_service: ^0.7.2
   just_audio: ^0.1.7
   requests:
+  firebase_core:
+  firebase_auth:
+  cloud_firestore:
 
 
 dev_dependencies:

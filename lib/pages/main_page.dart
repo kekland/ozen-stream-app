@@ -29,7 +29,7 @@ class _MainPageState extends State<MainPage> {
     heartsController = HeartsController();
     super.initState();
 
-    startAudioService();
+    WidgetsBinding.instance.addPostFrameCallback((_) => startAudioService());
   }
 
   startAudioService() async {
@@ -37,14 +37,21 @@ class _MainPageState extends State<MainPage> {
     timer = Timer.periodic(Duration(seconds: 10), loadData);
 
     AudioService.playbackStateStream.listen((state) {
-      ModelBinding.of<AppState>(context).copyWith(
-        isPlaying: state?.basicState == BasicPlaybackState.playing,
+      ModelBinding.update<AppState>(
+        context,
+        ModelBinding.of<AppState>(context).copyWith(
+          isPlaying: AudioService?.playbackState?.basicState ==
+              BasicPlaybackState.playing,
+        ),
       );
     });
 
-    ModelBinding.of<AppState>(context).copyWith(
-      isPlaying:
-          AudioService?.playbackState?.basicState == BasicPlaybackState.playing,
+    ModelBinding.update<AppState>(
+      context,
+      ModelBinding.of<AppState>(context).copyWith(
+        isPlaying: AudioService?.playbackState?.basicState ==
+            BasicPlaybackState.playing,
+      ),
     );
   }
 
