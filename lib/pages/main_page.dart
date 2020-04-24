@@ -36,6 +36,12 @@ class _MainPageState extends State<MainPage> {
     loadData();
     timer = Timer.periodic(Duration(seconds: 10), loadData);
 
+    AudioService.playbackStateStream.listen((state) {
+      ModelBinding.of<AppState>(context).copyWith(
+        isPlaying: state?.basicState == BasicPlaybackState.playing,
+      );
+    });
+
     ModelBinding.of<AppState>(context).copyWith(
       isPlaying:
           AudioService?.playbackState?.basicState == BasicPlaybackState.playing,
