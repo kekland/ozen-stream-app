@@ -1,3 +1,4 @@
+import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ozen_app/pages/intro_page.dart';
@@ -28,29 +29,31 @@ class MyApp extends StatelessWidget {
         isPlaying: false,
         history: [],
       ),
-      child: MaterialApp(
-        title: 'õzen',
-        themeMode: ThemeMode.dark,
-        darkTheme: ThemeData(
-          brightness: Brightness.dark,
-          primaryColor: Color(0xFF2BAAE2),
-          canvasColor: Colors.black,
-          cardColor: Color(0xFF2B2B2B),
-          accentColor: Color(0xFF2BAAE2),
+      child: AudioServiceWidget(
+        child: MaterialApp(
+          title: 'õzen',
+          themeMode: ThemeMode.dark,
+          darkTheme: ThemeData(
+            brightness: Brightness.dark,
+            primaryColor: Color(0xFF2BAAE2),
+            canvasColor: Colors.black,
+            cardColor: Color(0xFF2B2B2B),
+            accentColor: Color(0xFF2BAAE2),
+          ),
+          theme: ThemeData(
+            brightness: Brightness.light,
+            canvasColor: Color(0xFFF7F7F7),
+            accentColor: Color(0xFF2BAAE2),
+          ),
+          home: IntroPage(),
+          routes: {
+            '/intro': (_) => IntroPage(),
+            '/onboarding': (_) => OnboardingPage(),
+            '/main': (_) => MainPage(),
+            '/signIn': (_) => SignInPage(),
+            '/signUp': (_) => SignInPage(),
+          },
         ),
-        theme: ThemeData(
-          brightness: Brightness.light,
-          canvasColor: Color(0xFFF7F7F7),
-          accentColor: Color(0xFF2BAAE2),
-        ),
-        home: IntroPage(),
-        routes: {
-          '/intro': (_) => IntroPage(),
-          '/onboarding': (_) => OnboardingPage(),
-          '/main': (_) => MainPage(),
-          '/signIn': (_) => SignInPage(),
-          '/signUp': (_) => SignInPage(),
-        },
       ),
     );
   }

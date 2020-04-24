@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:ozen_app/api/api.dart';
+import 'package:ozen_app/api/audio_service.dart';
 import 'package:ozen_app/components/app_logo.dart';
 import 'package:ozen_app/components/main_page/audio_tunes_bar.dart';
 import 'package:ozen_app/components/main_page/button_bar.dart';
@@ -25,6 +27,8 @@ class _MainPageState extends State<MainPage> {
   initState() {
     heartsController = HeartsController();
     super.initState();
+
+    AudioService.start(backgroundTaskEntrypoint: ozenBackgroundTaskEntrypoint);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       loadData();

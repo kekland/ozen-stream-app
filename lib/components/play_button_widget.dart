@@ -1,3 +1,4 @@
+import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:ozen_app/extensions.dart';
 
@@ -31,10 +32,13 @@ class _PlayButtonState extends State<PlayButton>
   }
 
   didUpdateWidget(oldWidget) {
-    if (widget.isPlaying)
+    if (!oldWidget.isPlaying && widget.isPlaying) {
       iconAnimation.forward();
-    else
+      AudioService.play();
+    } else if (oldWidget.isPlaying && !widget.isPlaying) {
       iconAnimation.reverse();
+      AudioService.pause();
+    }
 
     super.didUpdateWidget(oldWidget);
   }
@@ -56,7 +60,7 @@ class _PlayButtonState extends State<PlayButton>
           borderRadius: BorderRadius.circular(diameter / 2.0),
           child: Center(
             child: AnimatedIcon(
-              size: widget.small? 32.0 : 48.0,
+              size: widget.small ? 32.0 : 48.0,
               progress: iconAnimation,
               icon: AnimatedIcons.play_pause,
             ),
