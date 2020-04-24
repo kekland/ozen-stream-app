@@ -1,7 +1,9 @@
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:ozen_app/components/chat/chat_current_track_widget.dart';
 import 'package:ozen_app/components/sliding_panel.dart';
+import 'package:ozen_app/pages/chat_panel.dart';
 import 'package:ozen_app/pages/share_panel.dart';
 import 'package:ozen_app/extensions.dart';
 import 'dart:math';
@@ -86,6 +88,47 @@ void showCustomSharePageModalSheet({BuildContext context}) {
               child: SlidingPanel(
                 expandHeight: false,
                 title: 'Добавить в',
+                child: child,
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+void showCustomChatPageModalSheet({BuildContext context}) {
+  showCustomModalBottomSheet(
+    context: context,
+    barrierColor: Colors.black.withOpacity(0.6),
+    builder: (_, scrollController) => ChatPanel(
+      scrollController: scrollController,
+    ),
+    containerWidget: (_, animation, child) => Material(
+      type: MaterialType.transparency,
+      child: Container(
+        child: Column(
+          children: [
+            Spacer(),
+            Opacity(
+              opacity: (animation.value * animation.value),
+              child: Padding(
+                padding: const EdgeInsets.all(32.0),
+                child: ChatCurrentTrackWidget(),
+              ),
+            ),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.black,
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(12.0),
+                ),
+              ),
+              child: SlidingPanel(
+                expandHeight: true,
+                title: 'Чат',
+                maxHeight: 0.6,
                 child: child,
               ),
             ),

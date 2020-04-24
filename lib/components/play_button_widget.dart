@@ -41,7 +41,7 @@ class _PlayButtonState extends State<PlayButton>
 
   @override
   Widget build(BuildContext context) {
-    final diameter = widget.small ? 48.0 : 144.0;
+    final diameter = widget.small ? 64.0 : 144.0;
     return Container(
       width: diameter,
       height: diameter,
@@ -56,7 +56,7 @@ class _PlayButtonState extends State<PlayButton>
           borderRadius: BorderRadius.circular(diameter / 2.0),
           child: Center(
             child: AnimatedIcon(
-              size: 48.0,
+              size: widget.small? 32.0 : 48.0,
               progress: iconAnimation,
               icon: AnimatedIcons.play_pause,
             ),

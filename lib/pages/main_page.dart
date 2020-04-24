@@ -110,12 +110,8 @@ class _MainPageState extends State<MainPage> {
                   ),
                   child: MainPageButtonBar(
                     onTapHeart: () => heartsController.addHeart(),
-                    onTapComment: () => showModalBottomSheet(
+                    onTapComment: () => showCustomChatPageModalSheet(
                       context: context,
-                      builder: (_) => SlidingPanel(
-                        title: 'Чат',
-                        child: ChatPanel(),
-                      ),
                     ),
                     onTapHistory: () => showCustomBottomSheet(
                       context: context,

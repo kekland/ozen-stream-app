@@ -4,18 +4,20 @@ class SlidingPanel extends StatelessWidget {
   final Widget child;
   final String title;
   final bool expandHeight;
+  final double maxHeight;
 
   const SlidingPanel({
     Key key,
     this.child,
     this.title,
     this.expandHeight = true,
+    this.maxHeight = 0.5,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: expandHeight ? MediaQuery.of(context).size.height / 2.0 : null,
+      height: expandHeight ? MediaQuery.of(context).size.height * maxHeight : null,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
