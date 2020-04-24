@@ -111,18 +111,21 @@ class _MainPageState extends State<MainPage> {
                     onTapComment: () => showModalBottomSheet(
                       context: context,
                       builder: (_) => SlidingPanel(
+                        title: 'Чат',
                         child: ChatPanel(),
                       ),
                     ),
                     onTapHistory: () => showModalBottomSheet(
                       context: context,
                       builder: (_) => SlidingPanel(
+                        title: 'История',
                         child: HistoryPanel(),
                       ),
                     ),
                     onTapShare: () => showModalBottomSheet(
                       context: context,
                       builder: (_) => SlidingPanel(
+                        title: 'Открыть в',
                         child: SharePanel(),
                       ),
                     ),
