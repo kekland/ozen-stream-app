@@ -4,7 +4,12 @@ import 'package:ozen_app/components/main_page/about_us_slider.dart';
 import 'package:ozen_app/components/main_page/audio_tunes_bar.dart';
 import 'package:ozen_app/components/main_page/button_bar.dart';
 import 'package:ozen_app/components/main_page/hearts_animator_bar.dart';
+import 'package:ozen_app/components/sliding_panel.dart';
 import 'package:ozen_app/components/song_name_widget.dart';
+import 'package:ozen_app/pages/chat_panel.dart';
+import 'package:ozen_app/pages/history_panel.dart';
+import 'package:ozen_app/pages/settings_panel.dart';
+import 'package:ozen_app/pages/share_panel.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -103,6 +108,24 @@ class _MainPageState extends State<MainPage> {
                   ),
                   child: MainPageButtonBar(
                     onTapHeart: () => heartsController.addHeart(),
+                    onTapComment: () => showModalBottomSheet(
+                      context: context,
+                      builder: (_) => SlidingPanel(
+                        child: ChatPanel(),
+                      ),
+                    ),
+                    onTapHistory: () => showModalBottomSheet(
+                      context: context,
+                      builder: (_) => SlidingPanel(
+                        child: HistoryPanel(),
+                      ),
+                    ),
+                    onTapShare: () => showModalBottomSheet(
+                      context: context,
+                      builder: (_) => SlidingPanel(
+                        child: SharePanel(),
+                      ),
+                    ),
                   ),
                 ),
               ],

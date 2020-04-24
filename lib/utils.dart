@@ -8,15 +8,16 @@ void pushAnimatedRoute({
 }) {
   Navigator.of(context).pushReplacement(
     PageRouteBuilder(
-        transitionDuration: duration,
-        pageBuilder: (context, animation, animation2) {
-          final _animation =
-              CurvedAnimation(curve: Curves.easeInOut, parent: animation);
-          return CircularRevealAnimation(
-            animation: _animation,
-            centerAlignment: Alignment.center,
-            child: builder(context),
-          );
-        }),
+      transitionDuration: duration,
+      pageBuilder: (context, animation, animation2) {
+        final _animation =
+            CurvedAnimation(curve: Curves.easeInOut, parent: animation);
+        return CircularRevealAnimation(
+          animation: _animation,
+          centerAlignment: Alignment.center,
+          child: builder(context),
+        );
+      },
+    ),
   );
 }
