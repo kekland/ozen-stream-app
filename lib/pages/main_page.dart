@@ -54,78 +54,82 @@ class _MainPageState extends State<MainPage> {
             ),
           ),
           SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Stack(
-                    children: [
-                      /* Padding(
-                        padding: const EdgeInsets.only(top: 80.0),
-                        child: Padding(
-                          padding: const EdgeInsets.all(32.0),
-                          child: AboutUsSlider(),
-                        ),
-                      ), */
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: Padding(
-                          padding: const EdgeInsets.all(32.0),
-                          child: Row(
-                            children: <Widget>[
-                              IconButton(
-                                icon: Icon(Icons.settings),
-                                onPressed: () {},
-                              ),
-                              Spacer(),
-                              AppLogo(),
-                            ],
+            child: Material(
+              type: MaterialType.transparency,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Stack(
+                      children: [
+                        /* Padding(
+                          padding: const EdgeInsets.only(top: 80.0),
+                          child: Padding(
+                            padding: const EdgeInsets.all(32.0),
+                            child: AboutUsSlider(),
+                          ),
+                        ), */
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: Padding(
+                            padding: const EdgeInsets.all(32.0),
+                            child: Row(
+                              children: <Widget>[
+                                IconButton(
+                                  icon: Icon(Icons.settings),
+                                  onPressed: () {},
+                                ),
+                                Spacer(),
+                                AppLogo(),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      HeartsAnimatorBar(
-                        controller: heartsController,
-                      ),
-                    ],
-                  ),
-                ),
-                AudioTunesBar(),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 32.0,
-                    right: 32.0,
-                    top: 32.0,
-                  ),
-                  child: SongNameWidget(
-                    author: 'Daft Punk',
-                    title: 'Around the world',
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 32.0,
-                    right: 32.0,
-                    bottom: 32.0,
-                    top: 32.0,
-                  ),
-                  child: MainPageButtonBar(
-                    onTapHeart: () => heartsController.addHeart(),
-                    onTapComment: () => showCustomChatPageModalSheet(
-                      context: context,
-                    ),
-                    onTapHistory: () => showCustomBottomSheet(
-                      context: context,
-                      builder: (_, scrollController) => SlidingPanel(
-                        title: 'История',
-                        child: HistoryPanel(scrollController: scrollController),
-                      ),
-                    ),
-                    onTapShare: () => showCustomSharePageModalSheet(
-                      context: context,
+                        HeartsAnimatorBar(
+                          controller: heartsController,
+                        ),
+                      ],
                     ),
                   ),
-                ),
-              ],
+                  AudioTunesBar(),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 32.0,
+                      right: 32.0,
+                      top: 32.0,
+                    ),
+                    child: SongNameWidget(
+                      author: 'Daft Punk',
+                      title: 'Around the world',
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 32.0,
+                      right: 32.0,
+                      bottom: 32.0,
+                      top: 32.0,
+                    ),
+                    child: MainPageButtonBar(
+                      onTapHeart: () => heartsController.addHeart(),
+                      onTapComment: () => showCustomChatPageModalSheet(
+                        context: context,
+                      ),
+                      onTapHistory: () => showCustomBottomSheet(
+                        context: context,
+                        builder: (_, scrollController) => SlidingPanel(
+                          title: 'История',
+                          child:
+                              HistoryPanel(scrollController: scrollController),
+                        ),
+                      ),
+                      onTapShare: () => showCustomSharePageModalSheet(
+                        context: context,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
