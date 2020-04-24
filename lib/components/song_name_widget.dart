@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:ozen_app/api/track.dart';
 import 'package:ozen_app/extensions.dart';
 
 class SongNameWidget extends StatelessWidget {
-  final String author;
-  final String title;
+  final Track track;
 
-  const SongNameWidget({Key key, this.author, this.title}) : super(key: key);
+  const SongNameWidget({Key key, this.track}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -16,7 +16,7 @@ class SongNameWidget extends StatelessWidget {
           color: Colors.black,
           padding: const EdgeInsets.all(4.0),
           child: Text(
-            author,
+            track?.author ?? 'Загрузка',
             style: TextStyle(
               color: Colors.white.withOpacity(0.7),
               fontSize: 16.0,
@@ -28,7 +28,7 @@ class SongNameWidget extends StatelessWidget {
           color: Colors.black,
           padding: const EdgeInsets.all(4.0),
           child: Text(
-            title,
+            track?.title ?? '',
             style: TextStyle(
               fontSize: 22.0,
               color: Colors.white,

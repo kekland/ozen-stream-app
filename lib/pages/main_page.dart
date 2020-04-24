@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:ozen_app/api/api.dart';
 import 'package:ozen_app/components/app_logo.dart';
 import 'package:ozen_app/components/main_page/audio_tunes_bar.dart';
 import 'package:ozen_app/components/main_page/button_bar.dart';
@@ -17,10 +20,28 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   HeartsController heartsController;
+  Timer timer;
 
   initState() {
     heartsController = HeartsController();
     super.initState();
+
+    fetchState();
+    timer = Timer.periodic(
+      Duration(
+        seconds: 10,
+      ),
+      (_) => fetchState(),
+    );
+  }
+
+  loadData() async {
+    fetchState(context: context);
+  }
+
+  dispose() {
+    timer.cancel();
+    super.dispose();
   }
 
   @override
@@ -98,8 +119,7 @@ class _MainPageState extends State<MainPage> {
                       top: 32.0,
                     ),
                     child: SongNameWidget(
-                      author: state?.currentTrack?.author ?? 'Загрузка',
-                      title: state?.currentTrack?.title ?? '',
+                      track: state.currentTrack,
                     ),
                   ),
                   Padding(

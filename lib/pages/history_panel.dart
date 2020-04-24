@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:ozen_app/api/track.dart';
 import 'package:ozen_app/components/clickable_panel_widget.dart';
 import 'package:ozen_app/components/playing_animated_icon.dart';
 import 'package:ozen_app/components/song_name_widget.dart';
 import 'package:ozen_app/extensions.dart';
+import 'package:ozen_app/state/binding.dart';
+import 'package:ozen_app/state/state.dart';
 
 class HistoryPanel extends StatefulWidget {
   final ScrollController scrollController;
@@ -15,6 +18,8 @@ class HistoryPanel extends StatefulWidget {
 class _HistoryPanelState extends State<HistoryPanel> {
   @override
   Widget build(BuildContext context) {
+    final state = ModelBinding.of<AppState>(context);
+
     return SingleChildScrollView(
       controller: widget.scrollController,
       physics: BouncingScrollPhysics(),
@@ -25,19 +30,12 @@ class _HistoryPanelState extends State<HistoryPanel> {
       ),
       child: Column(
         children: [
-          _HistorySong(
-            isPlayingNow: true,
+          ...state.history.map(
+            (track) => _HistorySong(
+              track: track,
+              isPlayingNow: state.currentTrack == track,
+            ),
           ),
-          SizedBox(height: 16.0),
-          _HistorySong(),
-          SizedBox(height: 16.0),
-          _HistorySong(),
-          SizedBox(height: 16.0),
-          _HistorySong(),
-          SizedBox(height: 16.0),
-          _HistorySong(),
-          SizedBox(height: 16.0),
-          _HistorySong(),
         ],
       ),
     );
@@ -46,8 +44,13 @@ class _HistoryPanelState extends State<HistoryPanel> {
 
 class _HistorySong extends StatelessWidget {
   final bool isPlayingNow;
+  final Track track;
 
-  const _HistorySong({Key key, this.isPlayingNow = false}) : super(key: key);
+  const _HistorySong({
+    Key key,
+    this.isPlayingNow = false,
+    this.track,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -59,17 +62,17 @@ class _HistorySong extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'kekland',
+                track.author,
                 style: TextStyle(
                   color: context.textTheme.caption.color,
-                  fontSize: 16.0,
+                  fontSize: 14.0,
                   fontWeight: FontWeight.w500,
                 ),
               ),
               Text(
-                'Lost in space',
+                track.title,
                 style: TextStyle(
-                  fontSize: 22.0,
+                  fontSize: 20.0,
                   fontWeight: FontWeight.w500,
                 ),
               ),
