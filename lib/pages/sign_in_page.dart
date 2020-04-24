@@ -17,6 +17,7 @@ class _SignInPageState extends State<SignInPage> {
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           padding: const EdgeInsets.all(32.0),
           child: Column(
             mainAxisSize: MainAxisSize.min,

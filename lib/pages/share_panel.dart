@@ -10,6 +10,7 @@ class _SharePanelState extends State<SharePanel> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
       padding: const EdgeInsets.all(24.0),
       child: Column(
         children: [

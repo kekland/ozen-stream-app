@@ -13,6 +13,7 @@ class _HistoryPanelState extends State<HistoryPanel> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      physics: BouncingScrollPhysics(),
       padding: const EdgeInsets.all(24.0),
       child: Column(
         children: [
