@@ -131,18 +131,19 @@ class SharePanelSong extends StatelessWidget {
             ),
           ),
         ),
-        Container(
-          color: Colors.black,
-          padding: const EdgeInsets.all(4.0),
-          child: Text(
-            track.author,
-            style: TextStyle(
-              color: Colors.white.withOpacity(0.7),
-              fontSize: 16.0,
-              fontWeight: FontWeight.w500,
+        if (track.author.isNotEmpty)
+          Container(
+            color: Colors.black,
+            padding: const EdgeInsets.all(4.0),
+            child: Text(
+              track.author,
+              style: TextStyle(
+                color: Colors.white.withOpacity(0.7),
+                fontSize: 16.0,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
-        ),
       ],
     );
   }

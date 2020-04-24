@@ -31,9 +31,12 @@ class _HistoryPanelState extends State<HistoryPanel> {
       child: Column(
         children: [
           ...state.history.map(
-            (track) => _HistorySong(
-              track: track,
-              isPlayingNow: state.currentTrack == track,
+            (track) => Padding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              child: _HistorySong(
+                track: track,
+                isPlayingNow: state.history.indexOf(track) == 0,
+              ),
             ),
           ),
         ],
@@ -61,14 +64,15 @@ class _HistorySong extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                track.author,
-                style: TextStyle(
-                  color: context.textTheme.caption.color,
-                  fontSize: 14.0,
-                  fontWeight: FontWeight.w500,
+              if (track.author.isNotEmpty)
+                Text(
+                  track.author,
+                  style: TextStyle(
+                    color: context.textTheme.caption.color,
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-              ),
               Text(
                 track.title,
                 style: TextStyle(

@@ -26,12 +26,15 @@ class _MainPageState extends State<MainPage> {
     heartsController = HeartsController();
     super.initState();
 
-    fetchState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      loadData();
+    });
+
     timer = Timer.periodic(
       Duration(
         seconds: 10,
       ),
-      (_) => fetchState(),
+      (_) => loadData(),
     );
   }
 
@@ -55,12 +58,14 @@ class _MainPageState extends State<MainPage> {
             decoration: BoxDecoration(
               color: Colors.black,
             ),
-            child: Image.network(
-              state?.currentTrack?.albumCoverUrl,
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: double.infinity,
-            ),
+            child: state?.currentTrack?.albumCoverUrl != null
+                ? Image.network(
+                    state?.currentTrack?.albumCoverUrl,
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    height: double.infinity,
+                  )
+                : Container(),
             foregroundDecoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment(0.0, 1.0),
