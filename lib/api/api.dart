@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:ozen_app/api/track.dart';
 import 'package:ozen_app/state/binding.dart';
@@ -40,4 +42,22 @@ Future<void> updateState({BuildContext context}) async {
   } catch (e) {
     print(e);
   }
+}
+
+Future<void> pushHeart({BuildContext context}) async {
+  final currentUser = await FirebaseAuth.instance.currentUser();
+
+  Firestore.instance.collection('hearts').add(
+    {
+      "uid": currentUser.uid,
+      "timestamp": DateTime.now(),
+    },
+  );
+}
+
+Future<void> listenToHearts(
+    {BuildContext context, VoidCallback callback}) async {
+  Firestore.instance.collection('hearts').snapshots().listen((querySnapshot) {
+    callback();
+  });
 }
