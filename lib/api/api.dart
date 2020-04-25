@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -37,6 +39,8 @@ Future<void> updateState({BuildContext context}) async {
             .toList(),
         isLoading: false,
         isPlaying: state.isPlaying,
+        currentUser: state.currentUser,
+        messages: state.messages,
       ),
     );
   } catch (e) {
@@ -55,9 +59,46 @@ Future<void> pushHeart({BuildContext context}) async {
   );
 }
 
-Future<void> listenToHearts(
-    {BuildContext context, VoidCallback callback}) async {
-  Firestore.instance.collection('hearts').snapshots().listen((querySnapshot) {
-    callback();
+StreamSubscription<QuerySnapshot> listenToHearts(
+    {BuildContext context, VoidCallback callback}) {
+  return Firestore.instance
+      .collection('hearts')
+      .orderBy('timestamp', descending: true)
+      .where('timestamp', isGreaterThan: Timestamp.now())
+      .snapshots()
+      .listen((querySnapshot) {
+    querySnapshot.documentChanges
+        .where((d) => d.type == DocumentChangeType.added)
+        .forEach((d) => callback());
   });
+}
+
+Future<void> sendMessage({BuildContext context, String body}) async {
+  final state = ModelBinding.of<AppState>(context);
+
+  await Firestore.instance.collection('messages').add({
+    'timestamp': DateTime.now(),
+    'uid': state.currentUser.firebaseUser.uid,
+    'username': state.currentUser.username,
+    'body': body,
+  });
+}
+
+StreamSubscription<QuerySnapshot> listenToMessages({
+  BuildContext context,
+  void Function(Map<String, dynamic>) callback,
+}) {
+  return Firestore.instance
+      .collection('messages')
+      .orderBy('timestamp', descending: true)
+      .where('timestamp', isGreaterThan: Timestamp.now())
+      .snapshots()
+      .listen((querySnapshot) {
+    querySnapshot.documentChanges
+        .where((d) => d.type == DocumentChangeType.added)
+        .forEach(
+          (d) => callback(d.document.data),
+        );
+  });
+  ;
 }

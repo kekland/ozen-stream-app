@@ -3,6 +3,8 @@ import 'package:ozen_app/api/auth.dart';
 import 'package:ozen_app/components/app_logo.dart';
 import 'package:ozen_app/extensions.dart';
 import 'package:ozen_app/pages/sign_up_page.dart';
+import 'package:ozen_app/state/binding.dart';
+import 'package:ozen_app/state/state.dart';
 import 'package:ozen_app/utils.dart';
 
 import 'main_page.dart';
@@ -41,12 +43,13 @@ class _SignInFormState extends State<SignInForm> {
     runAsyncTask(
       context: context,
       task: () async {
-        await signIn(
+        final user = await signIn(
           context: context,
           phoneNumber: phoneController.text,
           password: passwordController.text,
         );
 
+        Navigator.of(context).popUntil((r) => r.isFirst);
         pushAndReplaceAnimatedRoute(
           context: context,
           builder: (_) => MainPage(),
@@ -104,7 +107,9 @@ class _SignInFormState extends State<SignInForm> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0),
             ),
-            onPressed: () {},
+            onPressed: () {
+              signInTask();
+            },
           ),
         ),
         SizedBox(height: 12.0),
@@ -113,7 +118,10 @@ class _SignInFormState extends State<SignInForm> {
           child: FlatButton(
             child: Text('Создать аккаунт'),
             onPressed: () {
-              signInTask();
+              pushAndReplaceAnimatedRoute(
+                context: context,
+                builder: (_) => SignUpPage(),
+              );
             },
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12.0),

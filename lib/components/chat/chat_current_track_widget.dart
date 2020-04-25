@@ -17,7 +17,7 @@ class ChatCurrentTrackWidget extends StatelessWidget {
         ),
         Spacer(),
         PlayButton(
-          isPlaying: false,
+          isPlaying: state.isPlaying,
           onTap: () {
             if (state.isPlaying)
               AudioService.pause();

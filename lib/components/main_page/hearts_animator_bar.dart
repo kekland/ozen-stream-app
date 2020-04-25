@@ -115,7 +115,7 @@ class _HeartsAnimatorBarState extends State<HeartsAnimatorBar>
       lifetimeDuration: Duration(
         milliseconds: getRandomValue(2000.0, 1250.0).round(),
       ),
-      maxRisingHeight: getRandomValue(125.0, 70.0),
+      maxRisingHeight: getRandomValue(270.0, 160.0),
       startTime: DateTime.now(),
       velocityVector: Offset(
         getRandomValue(0.3, 0.3, true),

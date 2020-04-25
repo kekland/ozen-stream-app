@@ -1,8 +1,10 @@
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
 import 'package:flutter/material.dart';
+import 'package:ozen_app/api/auth.dart';
 import 'package:ozen_app/components/app_logo.dart';
 import 'package:ozen_app/pages/onboarding_page.dart';
 import 'package:ozen_app/utils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'main_page.dart';
 
@@ -22,7 +24,14 @@ class _IntroPageState extends State<IntroPage> {
 
   checkOnboarding() async {
     await Future.delayed(Duration(seconds: 1));
-    pushAndReplaceAnimatedRoute(context: context, builder: (_) => MainPage());
+    final prefs = await SharedPreferences.getInstance();
+    final loggedIn = await restoreState(context: context);
+    if ((prefs.getBool('onboardingPassed') ?? false) || loggedIn) {
+      pushAndReplaceAnimatedRoute(context: context, builder: (_) => MainPage());
+    }
+    else {
+      pushAndReplaceAnimatedRoute(context: context, builder: (_) => OnboardingPage());
+    }
   }
 
   @override

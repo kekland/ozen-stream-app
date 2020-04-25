@@ -7,6 +7,32 @@ import 'package:ozen_app/api/user.dart';
 import 'package:ozen_app/state/binding.dart';
 import 'package:ozen_app/state/state.dart';
 
+Future<bool> restoreState({BuildContext context}) async {
+  final fireUser = await FirebaseAuth.instance.currentUser();
+
+  if (fireUser != null) {
+    final document =
+        await Firestore.instance.document('user/${fireUser.uid}/').get();
+
+    final user = User(
+      firebaseUser: fireUser,
+      username: document.data['username'],
+    );
+
+    ModelBinding.update<AppState>(
+      context,
+      ModelBinding.of<AppState>(context).copyWith(
+        currentUser: user,
+      ),
+    );
+
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
 Future<User> signIn({
   BuildContext context,
   String phoneNumber,
@@ -42,18 +68,19 @@ Future<void> signUp({
   void Function(User) successCallback,
   void Function(String) errorCallback,
 }) async {
-  final createUser = () async {
-    final user = await _createAccount(
-      context: context,
-      password: password,
-      phoneNumber: phoneNumber,
-      username: username,
-    );
+  try {
+    final createUser = () async {
+      final user = await _createAccount(
+        context: context,
+        password: password,
+        phoneNumber: phoneNumber,
+        username: username,
+      );
 
-    successCallback(user);
-  };
+      successCallback(user);
+    };
 
-  await FirebaseAuth.instance.verifyPhoneNumber(
+    await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: phoneNumber,
       timeout: Duration(seconds: 60),
       verificationCompleted: (credential) async {
@@ -78,7 +105,11 @@ Future<void> signUp({
           errorCallback(e.toString());
         }
       },
-      codeAutoRetrievalTimeout: (err) {});
+      codeAutoRetrievalTimeout: (err) {},
+    );
+  } catch (e) {
+    errorCallback(e.toString());
+  }
 }
 
 Future<User> _createAccount({

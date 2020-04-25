@@ -9,6 +9,8 @@ import 'package:ozen_app/pages/share_panel.dart';
 import 'package:ozen_app/extensions.dart';
 import 'dart:math';
 
+import 'package:ozen_app/pages/sign_up_page.dart';
+
 void pushAnimatedRoute({
   BuildContext context,
   Duration duration = const Duration(milliseconds: 1250),
@@ -165,16 +167,14 @@ Future<void> runAsyncTask({
     showLoadingDialog(context).then((_) => shouldPop = false);
     await task();
   } catch (e) {
-    showScaffoldError(context, e);
-  } finally {
     if (shouldPop) {
-      /* await Future.delayed(Duration.zero, () {
+      await Future.delayed(Duration.zero, () {
         Navigator.of(context).pop(true);
-      }); */
+      });
     }
-  }
+    showScaffoldError(context, e);
+  } finally {}
 }
-
 
 Future showLoadingDialog(BuildContext context) {
   return showDialog(
@@ -231,4 +231,33 @@ void showScaffoldError(BuildContext context, dynamic e) {
       },
     ),
   ));
+}
+
+void showAuthRequiredDialog({BuildContext context}) {
+  showDialog(
+    context: context,
+    builder: (_) => AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12.0),
+      ),
+      title: Text('Необходима авторизация'),
+      content: Text(
+          'Для выполнения этого действия нужно войти или зарегистрироваться'),
+      actions: <Widget>[
+        FlatButton(
+            child: Text('Войти'),
+            onPressed: () {
+              Navigator.of(context).popUntil((p) => p.isFirst);
+              pushAndReplaceAnimatedRoute(
+                context: context,
+                builder: (_) => SignUpPage(),
+              );
+            }),
+        FlatButton(
+          child: Text('Закрыть'),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ],
+    ),
+  );
 }

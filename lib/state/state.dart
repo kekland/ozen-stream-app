@@ -8,6 +8,7 @@ class AppState {
 
   final bool isLoading;
   final User currentUser;
+  List<Map<String, dynamic>> messages;
 
   AppState({
     this.currentTrack,
@@ -15,6 +16,7 @@ class AppState {
     this.isPlaying,
     this.isLoading,
     this.currentUser,
+    this.messages,
   });
 
   AppState copyWith({
@@ -23,6 +25,7 @@ class AppState {
     bool isPlaying,
     bool isLoading,
     User currentUser,
+    List<Map<String, dynamic>> messages,
   }) {
     return AppState(
       currentTrack: currentTrack ?? this.currentTrack,
@@ -30,6 +33,7 @@ class AppState {
       isPlaying: isPlaying ?? this.isPlaying,
       isLoading: isLoading ?? this.isLoading,
       currentUser: currentUser ?? this.currentUser,
+      messages: messages ?? this.messages,
     );
   }
 }

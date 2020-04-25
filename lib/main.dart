@@ -27,7 +27,9 @@ class MyApp extends StatelessWidget {
         currentTrack: null,
         isLoading: true,
         isPlaying: false,
+        currentUser: null,
         history: [],
+        messages: [],
       ),
       child: AudioServiceWidget(
         child: MaterialApp(

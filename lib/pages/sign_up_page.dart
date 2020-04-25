@@ -5,6 +5,8 @@ import 'package:ozen_app/api/auth.dart';
 import 'package:ozen_app/components/app_logo.dart';
 import 'package:ozen_app/extensions.dart';
 import 'package:ozen_app/pages/sign_in_page.dart';
+import 'package:ozen_app/state/binding.dart';
+import 'package:ozen_app/state/state.dart';
 import 'package:ozen_app/utils.dart';
 import 'package:pin_entry_text_field/pin_entry_text_field.dart';
 
@@ -35,7 +37,7 @@ class _SignUpFormState extends State<SignUpForm> {
   TextEditingController passwordController;
   TextEditingController usernameController;
 
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   initState() {
     super.initState();
@@ -54,13 +56,15 @@ class _SignUpFormState extends State<SignUpForm> {
             password: passwordController.text,
             phoneNumber: phoneController.text,
             successCallback: (user) {
+              Navigator.of(context).popUntil((r) => r.isFirst);
               pushAndReplaceAnimatedRoute(
                 context: context,
                 builder: (_) => MainPage(),
               );
             },
             errorCallback: (str) {
-              throw str;
+              Navigator.of(context).popUntil((r) => r.isFirst);
+              throw Exception(str);
             },
             codeSentCallback: () async {
               return await showDialog<String>(
@@ -88,6 +92,7 @@ class _SignUpFormState extends State<SignUpForm> {
     return Form(
       key: _formKey,
       autovalidate: true,
+      onChanged: () => setState(() {}),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -115,13 +120,15 @@ class _SignUpFormState extends State<SignUpForm> {
               ),
             ),
           ),
-          SizedBox(height: 24.0),
+          SizedBox(height: 8.0),
           TextFormField(
             controller: phoneController,
             keyboardType: TextInputType.phone,
-            validator: (v) => RegExp(r'^(?:[+0]9)?[0-9]{10}$').hasMatch(v)
-                ? null
-                : 'Введите номер телефона',
+            validator: (v) =>
+                RegExp(r'^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$')
+                        .hasMatch(v)
+                    ? null
+                    : 'Введите номер телефона',
             decoration: InputDecoration(
               labelText: 'Номер телефона',
               prefixIcon: Icon(Icons.phone),
@@ -155,7 +162,7 @@ class _SignUpFormState extends State<SignUpForm> {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12.0),
               ),
-              onPressed: _formKey.currentState.validate()
+              onPressed: (_formKey?.currentState?.validate() ?? false)
                   ? () {
                       signUpTask();
                     }

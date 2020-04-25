@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:ozen_app/components/chat/chat_field.dart';
 import 'package:ozen_app/components/chat/chat_message.dart';
+import 'package:ozen_app/state/binding.dart';
+import 'package:ozen_app/state/state.dart';
 
 class ChatPanel extends StatefulWidget {
   final ScrollController scrollController;
@@ -14,10 +16,11 @@ class ChatPanel extends StatefulWidget {
 class _ChatPanelState extends State<ChatPanel> {
   @override
   Widget build(BuildContext context) {
+    final state = ModelBinding.of<AppState>(context);
     return Column(
       children: <Widget>[
         Expanded(
-          child: ListView(
+          child: ListView.separated(
             reverse: true,
             physics: BouncingScrollPhysics(),
             padding: const EdgeInsets.only(
@@ -25,32 +28,12 @@ class _ChatPanelState extends State<ChatPanel> {
               right: 24.0,
               bottom: 8.0,
             ),
-            children: [
-              ChatMessage(
-                body: 'Hi!',
-                username: 'kekland',
-              ),
-              SizedBox(height: 16.0),
-              ChatMessage(
-                body: 'Hi!',
-                username: 'kekland',
-              ),
-              SizedBox(height: 16.0),
-              ChatMessage(
-                body: 'Hi!',
-                username: 'kekland',
-              ),
-              SizedBox(height: 16.0),
-              ChatMessage(
-                body: 'Hi!',
-                username: 'kekland',
-              ),
-              SizedBox(height: 16.0),
-              ChatMessage(
-                body: 'Hi!',
-                username: 'kekland',
-              ),
-            ],
+            itemCount: state.messages.length,
+            itemBuilder: (context, i) => ChatMessage(
+              body: state.messages[i]['body'],
+              username: state.messages[i]['username'],
+            ),
+            separatorBuilder: (context, i) => SizedBox(height: 16.0),
           ),
         ),
         Container(

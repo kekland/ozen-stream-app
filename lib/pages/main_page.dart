@@ -24,12 +24,17 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   HeartsController heartsController;
   Timer timer;
+  List<StreamSubscription> subscriptions = [];
 
   initState() {
     heartsController = HeartsController();
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => startAudioService());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      startAudioService();
+      startHeartsService();
+      startChatService();
+    });
   }
 
   startAudioService() async {
@@ -55,12 +60,36 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
+  startHeartsService() async {
+    subscriptions.add(
+      listenToHearts(context: context, callback: heartsController.addHeart),
+    );
+  }
+
+  startChatService() async {
+    subscriptions.add(
+      listenToMessages(
+        context: context,
+        callback: (d) {
+          final state = ModelBinding.of<AppState>(context);
+          ModelBinding.update<AppState>(
+            context,
+            state.copyWith(
+              messages: [d, ...state.messages],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
   loadData([dynamic _]) async {
     updateState(context: context);
   }
 
   dispose() {
     timer.cancel();
+    subscriptions.forEach((s) => s.cancel());
     super.dispose();
   }
 
@@ -152,7 +181,13 @@ class _MainPageState extends State<MainPage> {
                       top: 32.0,
                     ),
                     child: MainPageButtonBar(
-                      onTapHeart: () => heartsController.addHeart(),
+                      onTapHeart: () {
+                        if (state.currentUser == null) {
+                          showAuthRequiredDialog(context: context);
+                          return;
+                        }
+                        pushHeart(context: context);
+                      },
                       onTapComment: () => showCustomChatPageModalSheet(
                         context: context,
                       ),
