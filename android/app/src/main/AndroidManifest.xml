@@ -11,7 +11,7 @@
 
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="ozen_app"
+        android:label="õzen stream"
         android:icon="@mipmap/launcher_icon"
         android:usesCleartextTraffic="true">
         <activity

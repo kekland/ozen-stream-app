@@ -12,6 +12,7 @@ import 'package:ozen_app/components/main_page/hearts_animator_bar.dart';
 import 'package:ozen_app/components/sliding_panel.dart';
 import 'package:ozen_app/components/song_name_widget.dart';
 import 'package:ozen_app/pages/history_panel.dart';
+import 'package:ozen_app/pages/settings_panel.dart';
 import 'package:ozen_app/state/binding.dart';
 import 'package:ozen_app/state/state.dart';
 import 'package:ozen_app/utils.dart';
@@ -148,7 +149,14 @@ class _MainPageState extends State<MainPage> {
                               children: <Widget>[
                                 IconButton(
                                   icon: Icon(Icons.settings),
-                                  onPressed: () {},
+                                  onPressed: () => showCustomBottomSheet(
+                                    context: context,
+                                    builder: (_, scrollController) =>
+                                        SlidingPanel(
+                                      title: 'Настройки',
+                                      child: SettingsPanel(),
+                                    ),
+                                  ),
                                 ),
                                 Spacer(),
                                 AppLogo(),
@@ -188,9 +196,16 @@ class _MainPageState extends State<MainPage> {
                         }
                         pushHeart(context: context);
                       },
-                      onTapComment: () => showCustomChatPageModalSheet(
-                        context: context,
-                      ),
+                      onTapComment: () {
+                        if (state.currentUser == null) {
+                          showAuthRequiredDialog(context: context);
+                          return;
+                        }
+
+                        showCustomChatPageModalSheet(
+                          context: context,
+                        );
+                      },
                       onTapHistory: () => showCustomBottomSheet(
                         context: context,
                         builder: (_, scrollController) => SlidingPanel(
