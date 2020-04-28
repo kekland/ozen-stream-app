@@ -59,7 +59,9 @@ void showCustomSharePageModalSheet({BuildContext context, Track track}) {
   showCustomModalBottomSheet(
     context: context,
     barrierColor: Colors.black.withOpacity(0.6),
-    builder: (_, scrollController) => SharePanel(),
+    builder: (_, scrollController) => SharePanel(
+      track: track,
+    ),
     containerWidget: (_, animation, child) => Material(
       type: MaterialType.transparency,
       child: Container(

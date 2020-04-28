@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ozen_app/api/api.dart';
 import 'package:ozen_app/api/track.dart';
 
 class SharePanelButton extends StatelessWidget {
@@ -51,6 +54,10 @@ class SharePanelButton extends StatelessWidget {
 }
 
 class SharePanel extends StatefulWidget {
+  final Track track;
+
+  const SharePanel({Key key, this.track}) : super(key: key);
+
   @override
   _SharePanelState createState() => _SharePanelState();
 }
@@ -68,19 +75,25 @@ class _SharePanelState extends State<SharePanel> {
       child: Column(
         children: [
           SharePanelButton(
-            onTap: () {},
+            onTap: () => openMusicInApp(
+              app: MusicApp.yandexMusic,
+              track: widget.track,
+            ),
             icon: FontAwesomeIcons.yandex,
             text: 'Яндекс.Музыка',
             iconColor: Colors.red,
           ),
           SharePanelButton(
-            onTap: () {},
+            onTap: () => openMusicInApp(
+              app: MusicApp.spotify,
+              track: widget.track,
+            ),
             icon: FontAwesomeIcons.spotify,
             text: 'Spotify',
             iconColor: Colors.green,
           ),
           SharePanelButton(
-            onTap: () {},
+            onTap: Platform.isIOS ? () {} : null,
             icon: FontAwesomeIcons.apple,
             text: 'Apple Music',
             iconColor: Colors.white.withOpacity(0.75),

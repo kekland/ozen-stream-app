@@ -7,6 +7,7 @@ import 'package:ozen_app/api/track.dart';
 import 'package:ozen_app/state/binding.dart';
 import 'package:ozen_app/state/state.dart';
 import 'package:requests/requests.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 Future<Track> getCurrentTrack() async {
   try {
@@ -100,5 +101,23 @@ StreamSubscription<QuerySnapshot> listenToMessages({
           (d) => callback(d.document.data),
         );
   });
-  ;
+}
+
+enum MusicApp {
+  yandexMusic,
+  spotify,
+  appleMusic,
+}
+
+openMusicInApp({Track track, MusicApp app}) {
+  String url = '';
+  if (app == MusicApp.yandexMusic) {
+    url =
+        'https://music.yandex.ru/search?text=${track.author} - ${track.title}';
+  } else if (app == MusicApp.spotify) {
+    url =
+        'https://play.spotify.com/search/artist:${track.author}%20track:${track.title}';
+  }
+
+  launch(Uri.encodeFull(url));
 }
